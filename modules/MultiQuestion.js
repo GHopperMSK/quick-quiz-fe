@@ -37,8 +37,18 @@ function MultiQuestion(id, data)
         });
         this.elem.dispatchEvent(qqSlideEvent); 
     }
+
+    this.render = function(elem) {
+        this.elem = elem;
+        elem.innerHTML = this.compileTemplate();
+        for (const optionId in this.data.options) {
+            document.getElementById("qq_mlt_slide_option_" + optionId)
+                .addEventListener('click', () => { this.setOptionId(optionId) });
+        }
+
+        BaseSlide.prototype.render.call(this, elem);
+    }
     
-    // TODO: cache compiled templite
     this.compileTemplate = function() {
         let html = "";
         html += "<p>" + this.data.question + "</p>";
@@ -47,8 +57,7 @@ function MultiQuestion(id, data)
             if (this.optionIds.indexOf(parseInt(optionId)) != -1) {
                 isChecked = "checked ";
             }
-            // TODO: window.quickQuiz.getCurrentSlide() shouldn't exist
-            html += "<input type='checkbox' id='" + optionId + "' value='" + optionId + "' " + isChecked + "onclick='window.quickQuiz.getCurrentSlide().setOptionId(" + optionId + ");'>";
+            html += "<input type='checkbox' id='qq_mlt_slide_option_" + optionId + "' value='" + optionId + "' " + isChecked + "'>";
             html += "<label for='" + optionId + "'>" + this.data.options[optionId].label + "</label><br></br>";
         }
         return html;

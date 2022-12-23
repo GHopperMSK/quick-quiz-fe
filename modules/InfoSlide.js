@@ -9,14 +9,22 @@ function InfoSlide(id, data)
     this.compileTemplate = function() {
         let html = "<div>" + this.data.text;
         if (this.isConfirmRequired()) {
-            html += '<br /><input type="checkbox" id="info_slide_confirm" onclick="window.quickQuiz.getCurrentSlide().markAgreement()"'
+            html += '<br /><input type="checkbox" id="qq_inf_slide_confirm_checkbox""'
                 + (this.isConfirmed ? " checked" : "")
-                + '/><label for="info_slide_confirm">' 
+                + '/><label for="qq_inf_slide_confirm_checkbox">' 
                 + this.data.confirment_label 
                 + '</label>';
         }
         html += "</div>";
         return html;
+    }
+
+    this.render = function(elem) {
+        this.elem = elem;
+        elem.innerHTML = this.compileTemplate();
+        document.getElementById("qq_inf_slide_confirm_checkbox").addEventListener('click', () => { this.markAgreement() });
+
+        BaseSlide.prototype.render.call(this, elem);
     }
 
     this.isConfirmRequired = function() {

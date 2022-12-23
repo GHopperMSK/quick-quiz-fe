@@ -1,4 +1,4 @@
-# Quick Quiz
+# Quick Quiz frontend
 
 ## Info
 A web service which provides a possibility to add questionnaires to any website. Highly customizable questions and design. Rich export opportunities and in house report generator.

@@ -35,7 +35,17 @@ function SelectQuestion(id, data)
         this.elem.dispatchEvent(qqSlideEvent); 
     }
     
-    // TODO: cache compiled templite
+    this.render = function(elem) {
+        this.elem = elem;
+        elem.innerHTML = this.compileTemplate();
+        for (const optionId in this.data.options) {
+            document.getElementById("qq_slt_slide_option_" + optionId)
+                .addEventListener('click', () => { this.setOptionId(optionId) });
+        }
+
+        BaseSlide.prototype.render.call(this, elem);
+    }
+
     this.compileTemplate = function() {
         let html = "";
         html += "<p>" + this.data.question + "</p>";
@@ -44,8 +54,7 @@ function SelectQuestion(id, data)
             if (this.optionId == optionId) {
                 isChecked = "checked "
             }
-            // TODO: window.quickQuiz.getCurrentSlide() shouldn't exist
-            html += "<input type='radio' id='" + optionId + "' name='qq-select-question' value='" + optionId + "' " + isChecked + "onclick='window.quickQuiz.getCurrentSlide().setOptionId(" + optionId + ");'>";
+            html += "<input type='radio' id='qq_slt_slide_option_" + optionId + "' name='qq-select-question' value='" + optionId + "' " + isChecked + "'>";
             html += "<label for='" + optionId + "'>" + this.data.options[optionId].label + "</label><br></br>";
         }
         return html;

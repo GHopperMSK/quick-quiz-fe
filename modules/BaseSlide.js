@@ -3,7 +3,7 @@ import InfoSlide from "./InfoSlide.js";
 import SelectQuestion from "./SelectQuestion.js";
 import MultiQuestion from "./MultiQuestion.js";
 
-function BaseSlide(id, data, timeout)
+function BaseSlide(id, data)
 {
     this.id = id;
     this.data = data;
@@ -13,9 +13,6 @@ function BaseSlide(id, data, timeout)
 }
 
 BaseSlide.prototype.render = function(elem) {
-    this.elem = elem;
-    elem.innerHTML = this.compileTemplate();
-
     const timeout = this.getTimeout();
     if (timeout != 0) {
         const intervalId = setInterval(function(that) {
