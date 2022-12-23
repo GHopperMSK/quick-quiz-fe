@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module" src="./main.js"></script>
+        <link rel="stylesheet" href="./styles.css"> 
+    </head>
+    <body>
+        <h1>Quick Quiz</h1>
+        <div id="quickquiz"></div>
+        <script>
+            window.addEventListener('load', (event) => {
+                const quizRootElement = document.getElementById("quickquiz");
+                const reportCallback = function(report) {
+                    console.dir(report);
+                }
+                const qqEventInit = new CustomEvent("qq-init", {
+                    "detail": {
+                        "quiz_id": 1,
+                        "website_id": 2,
+                        "root_element": quizRootElement,
+                        "report_callback": reportCallback
+                    }
+                });
+
+                window.dispatchEvent(qqEventInit);
+            });
+        </script>
+    </body>
+</html> 

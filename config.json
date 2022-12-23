@@ -1,0 +1,61 @@
+{
+    "version": 1.0,
+    "init_slide": 1,
+    "slides": [
+        {
+            "id": 1,
+            "type": "INF",
+            "config": {
+                "text": "some text to show on the step",
+                "next_slide_id": 2,
+                "next_button_label": "Let's start!",
+                "confirment_label": "Do you agree?",
+                "timeout_seconds": 2
+            }
+        },
+        {
+            "id": 2,
+            "type": "SLT",
+            "config": {
+                "question": "Who is the smartest man on the planet?",
+                "options": {
+                    "1": {
+                        "next_slide_id": 3,
+                        "label": "Ilon Musk"
+                    },
+                    "2": {
+                        "next_slide_id": null,
+                        "label": "Michail Hodorkovsky",
+                        "next_button_label": "Submit"
+                    },
+                    "3": {
+                        "next_slide_id": 1,
+                        "label": "Diego Maradona",
+                        "next_button_label": "Next"
+                    }
+                },
+                "default_next_button_label": "Default Label"
+            }
+        },
+        {
+            "id": 3,
+            "type": "MLT",
+            "config": {
+                "question": "Which bands do you like?",
+                "options": {
+                    "1": {
+                        "label": "Scorpions"
+                    },
+                    "2": {
+                        "label": "Metallica"
+                    },
+                    "3": {
+                        "label": "Nirvana"
+                    }
+                },
+                "next_button_label": "Multi Next",
+                "next_slide_id": null
+            }
+        }
+    ]
+}
