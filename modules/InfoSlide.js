@@ -7,13 +7,15 @@ function InfoSlide(id, data)
     this.isConfirmed = false;
 
     this.compileTemplate = function() {
-        let html = "<div>" + this.data.text;
+        let html = `<div><p>${this.data.text}</p>`;
         if (this.isConfirmRequired()) {
-            html += '<br /><input type="checkbox" id="qq_inf_slide_confirm_checkbox""'
-                + (this.isConfirmed ? " checked" : "")
-                + '/><label for="qq_inf_slide_confirm_checkbox">' 
-                + this.data.confirment_label 
-                + '</label>';
+            html += `<input type="checkbox"
+                id="qq_inf_slide_confirm_checkbox"
+                ${this.isConfirmed ? " checked" : ""} />
+                <label for="qq_inf_slide_confirm_checkbox">
+                    ${this.data.confirment_label}
+                </label>
+            `;
         }
         html += "</div>";
         return html;

@@ -50,15 +50,13 @@ function MultiQuestion(id, data)
     }
     
     this.compileTemplate = function() {
-        let html = "";
-        html += "<p>" + this.data.question + "</p>";
+        let html = `<p>${this.data.question}</p>`;
         for (const optionId in this.data.options) {
-            let isChecked = "";
-            if (this.optionIds.indexOf(parseInt(optionId)) != -1) {
-                isChecked = "checked ";
-            }
-            html += "<input type='checkbox' id='qq_mlt_slide_option_" + optionId + "' value='" + optionId + "' " + isChecked + "'>";
-            html += "<label for='" + optionId + "'>" + this.data.options[optionId].label + "</label><br></br>";
+            html += `<input type="checkbox"
+                id="qq_mlt_slide_option_${optionId}"
+                value="${optionId}"
+                ${(this.optionIds.indexOf(parseInt(optionId)) != -1) ? "checked" : ""} />`;
+            html += `<label for="${optionId}">${this.data.options[optionId].label}</label><br />`;
         }
         return html;
     }

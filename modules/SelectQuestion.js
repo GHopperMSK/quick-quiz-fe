@@ -48,14 +48,16 @@ function SelectQuestion(id, data)
 
     this.compileTemplate = function() {
         let html = "";
-        html += "<p>" + this.data.question + "</p>";
+        html += `<p>${this.data.question}</p>`;
         for (const optionId in this.data.options) {
-            let isChecked = "";
-            if (this.optionId == optionId) {
-                isChecked = "checked "
-            }
-            html += "<input type='radio' id='qq_slt_slide_option_" + optionId + "' name='qq-select-question' value='" + optionId + "' " + isChecked + "'>";
-            html += "<label for='" + optionId + "'>" + this.data.options[optionId].label + "</label><br></br>";
+            html += `<input
+                type="radio"
+                id="qq_slt_slide_option_${optionId}"
+                name="qq-select-question"
+                value="${optionId}"
+                ${(this.optionId == optionId) ? "checked" : ""} />
+            `;
+            html += `<label for='${optionId}'>"${this.data.options[optionId].label}</label><br />`;
         }
         return html;
     }

@@ -159,48 +159,56 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         return this.slidesHistory.length == 1;
     }
 }
+
 Object.defineProperty(QuickQuizCore, 'INFO_SLIDE', {
     value: "INF",
     writable: false,
     enumerable: false,
     configurable: false,
 });
+
 Object.defineProperty(QuickQuizCore, 'SELECT_QUESTION', {
     value: "SLT",
     writable: false,
     enumerable: false,
     configurable: false,
 });
+
 Object.defineProperty(QuickQuizCore, 'MULTI_QUESTION', {
     value: "MLT",
     writable: false,
     enumerable: false,
     configurable: false,
 });
+
 Object.defineProperty(QuickQuizCore, 'OPEN_QUESTION', {
     value: "OPQ",
     writable: false,
     enumerable: false,
     configurable: false,
 });
+
 Object.defineProperty(QuickQuizCore, 'SCALE_SLIDE', {
     value: "SCL",
     writable: false,
     enumerable: false,
     configurable: false,
 });
+
 Object.defineProperty(QuickQuizCore, "DEFAULT_PERV_BUTTON_LABEL", {
     value: "<<",
     writable: false,
     configurable: false,
     enumerable: false
 });
+
 Object.defineProperty(QuickQuizCore, "DEFAULT_NEXT_BUTTON_LABEL", {
     value: ">>",
     writable: false,
     configurable: false,
     enumerable: false
 });
+
 Object.defineProperty(QuickQuizCore, "EVENT_INIT_TYPE", {
     value: "qq-init",
     writable: false,
