@@ -10,7 +10,8 @@ function MultiQuestion(id, data)
     }
     
     this.isNextButtonEnabled = function() {
-        return this.optionIds.length != 0;
+        const minCount = this.optionIds.min_options_count != null ? this.optionIds.min_options_count : 1;
+        return this.optionIds.length > minCount;
     }
     
     this.getNextButtonLabel = function() {
