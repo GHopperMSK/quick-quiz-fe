@@ -10,7 +10,8 @@
                 "next_slide_id": 2,
                 "next_button_label": "Let's start!",
                 "confirment_label": "Do you agree?",
-                "timeout_seconds": 2
+                "skippable": true,
+                "timeout_seconds": 1
             }
         },
         {
@@ -34,7 +35,8 @@
                         "next_button_label": "Next"
                     }
                 },
-                "default_next_button_label": "Default Label"
+                "default_next_button_label": "Default Label",
+                "timeout_seconds": 5
             }
         },
         {
@@ -54,7 +56,21 @@
                     }
                 },
                 "next_button_label": "Multi Next",
-                "next_slide_id": null
+                "next_slide_id": null,
+                "skippable": true,
+                "min_options_count": 2
+            }
+        },
+        {
+            "id": 4,
+            "type": "OPQ",
+            "config": {
+                "question": "How was your experience?",
+                "next_slide_id": null,
+                "next_button_label": "Send",
+                "skippable": false,
+                "text_form": "textarea",
+                "min_character_count": 5
             }
         }
     ]

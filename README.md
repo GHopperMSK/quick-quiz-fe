@@ -53,7 +53,7 @@ Many answers are provided but you can choose only one.
                 "is_default": BOOL
             },
         },
-        "button_label": STRING,
+        "next_button_label": STRING,
         "skippable": BOOL
     }
 }
@@ -80,7 +80,7 @@ Many answers are provided and you can choose many of them.
                 "label": STRING
             },
         },
-        "button_label": STRING,
+        "next_button_label": STRING,
         "next_slide_id": INT,
         "skippable": BOOL,
         "min_options_count": INT
@@ -98,7 +98,7 @@ You can type your own anwser.
     "config": {
         "question": STRING,
         "next_slide_id": INT,
-        "button_label": STRING,
+        "next_button_label": STRING,
         "skippable": BOOL,
         "text_form": FORM_INPUT | FORM_TEXTAREA,
         "min_character_count": INT
@@ -119,7 +119,7 @@ An opportunity to evaluate something on scale.
         "min_value": FLOAT,
         "max_value": FLOAT,
         "step_size": FLOAT,
-        "button_label": STRING,
+        "next_button_label": STRING,
         "skippable": BOOL,
         "text_form": FORM_INPUT | FORM_TEXTAREA,
         "min_character_count": INT

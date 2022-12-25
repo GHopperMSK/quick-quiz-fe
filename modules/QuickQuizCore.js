@@ -70,7 +70,8 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
 
     this.setEventListeners = function() {
         this.root.addEventListener('qq-slide-event', (event) => {
-            this.renderControlElements(event.detail.slide_id);
+            const currentSlide = this.getCurrentSlide();
+            this.renderControlElements(currentSlide.id);
             event.stopPropagation();
         });
     }
@@ -108,10 +109,6 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         }
 
         const timeout = currentSlide.getTimeout();
-        if (timeout != 0) {
-            nextButtonLabel += " (" + timeout + ")";
-        }
-
         if (currentSlide.isNextButtonEnabled()) {
             if (timeout == 0) {
                 this.nextButton.removeAttribute("disabled");
@@ -119,7 +116,16 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
                 this.nextButton.setAttribute("disabled", true);
             }
         } else {
-            this.nextButton.setAttribute("disabled", true);
+            if (currentSlide.isSkippable()) {
+                nextButtonLabel = QuickQuizCore.DEFAULT_SKIP_BUTTON_LABEL;
+                this.nextButton.removeAttribute("disabled");
+            } else {
+                this.nextButton.setAttribute("disabled", true);
+            }
+        }
+
+        if (timeout > 0) {
+            nextButtonLabel += " (" + timeout + ")";
         }
 
         this.nextButton.innerText = nextButtonLabel;
@@ -209,8 +215,29 @@ Object.defineProperty(QuickQuizCore, "DEFAULT_NEXT_BUTTON_LABEL", {
     enumerable: false
 });
 
+Object.defineProperty(QuickQuizCore, "DEFAULT_SKIP_BUTTON_LABEL", {
+    value: "Skip",
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
+
 Object.defineProperty(QuickQuizCore, "EVENT_INIT_TYPE", {
     value: "qq-init",
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
+
+Object.defineProperty(QuickQuizCore, "OPQ_TYPE_INPUT", {
+    value: "input",
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
+
+Object.defineProperty(QuickQuizCore, "OPQ_TYPE_TEXTAREA", {
+    value: "textarea",
     writable: false,
     configurable: false,
     enumerable: false
