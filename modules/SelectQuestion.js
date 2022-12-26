@@ -57,7 +57,7 @@ function SelectQuestion(id, data)
                 value="${optionId}"
                 ${(this.optionId == optionId) ? "checked" : ""} />
             `;
-            html += `<label for='${optionId}'>"${this.data.options[optionId].label}</label><br />`;
+            html += `<label for='qq_slt_slide_option_${optionId}'>"${this.data.options[optionId].label}</label><br />`;
         }
         return html;
     }

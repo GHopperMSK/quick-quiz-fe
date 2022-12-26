@@ -57,7 +57,7 @@ function MultiQuestion(id, data)
                 id="qq_mlt_slide_option_${optionId}"
                 value="${optionId}"
                 ${(this.optionIds.indexOf(parseInt(optionId)) != -1) ? "checked" : ""} />`;
-            html += `<label for="${optionId}">${this.data.options[optionId].label}</label><br />`;
+            html += `<label for="qq_mlt_slide_option_${optionId}">${this.data.options[optionId].label}</label><br />`;
         }
         return html;
     }

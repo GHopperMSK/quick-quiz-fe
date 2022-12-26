@@ -6,7 +6,7 @@
             "id": 1,
             "type": "INF",
             "config": {
-                "text": "some text to show on the step",
+                "text": "Some text to show on the step",
                 "next_slide_id": 2,
                 "next_button_label": "Let's start!",
                 "confirment_label": "Do you agree?",

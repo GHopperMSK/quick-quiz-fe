@@ -7,7 +7,7 @@ function InfoSlide(id, data)
     this.isConfirmed = false;
 
     this.compileTemplate = function() {
-        let html = `<div><p>${this.data.text}</p>`;
+        let html = `<p>${this.data.text}</p>`;
         if (this.isConfirmRequired()) {
             html += `<input type="checkbox"
                 id="qq_inf_slide_confirm_checkbox"
@@ -17,7 +17,6 @@ function InfoSlide(id, data)
                 </label>
             `;
         }
-        html += "</div>";
         return html;
     }
 

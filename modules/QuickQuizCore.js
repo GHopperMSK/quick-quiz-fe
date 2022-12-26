@@ -33,6 +33,9 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         this.slidesBlock.id = "qq-slides";
         this.root.appendChild(this.slidesBlock);
 
+        const controlDiv = document.createElement("div");
+        controlDiv.id = "qq-controls";
+
         this.prevButton = document.createElement('button');
         this.prevButton.onclick = function() {
             window.quickQuiz.prev();
@@ -40,14 +43,16 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         };
         this.prevButton.innerText = QuickQuizCore.DEFAULT_PERV_BUTTON_LABEL;
 
-        this.root.appendChild(this.prevButton);
+        controlDiv.appendChild(this.prevButton);
 
         this.nextButton = document.createElement('button');
         this.nextButton.onclick = function() {
             window.quickQuiz.next();
             return false;
         };
-        this.root.appendChild(this.nextButton);
+        controlDiv.appendChild(this.nextButton);
+
+        this.root.appendChild(controlDiv);
 
         this.isInitialized = true;
 

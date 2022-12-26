@@ -1,8 +1,27 @@
 .qq-root {
-    background-color: green;
-    margin-bottom: 200px;
+    width: 25em;
+    padding: 0.5em;
 }
 
 #qq-slides {
-    background-color: yellow;
+    margin-bottom: 10px;
+}
+
+#qq-slides p {
+    margin: 0;
+}
+
+#qq-controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+#qq-controls button {
+    flex: 1;
+}
+
+button {
+    margin: 0 3em;
 }

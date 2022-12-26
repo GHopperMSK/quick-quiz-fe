@@ -106,7 +106,7 @@ You can type your own anwser.
 }
 ```
 
-### Scale slide
+### Scale slide (doesn't implemented yet)
 An opportunity to evaluate something on scale.
 
 ```json
