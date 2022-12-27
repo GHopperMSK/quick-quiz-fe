@@ -18,12 +18,15 @@ BaseSlide.prototype.render = function(elem) {
     const timeout = this.getTimeout();
     if (timeout != 0) {
         const intervalId = setInterval(function(that) {
-            that.timeoutCounter += 1;
-
-            that.emitEvent(elem, that.id);
-            if (that.timeoutCounter >= that.timeout) {
-                clearInterval(intervalId);   
+            if (window.quickQuiz.getCurrentSlide().id != that.id) {
+                clearInterval(intervalId);
             }
+
+            that.timeoutCounter += 1;
+            if (that.timeoutCounter >= that.timeout) {
+                clearInterval(intervalId);
+            }
+            that.emitEvent(elem, that.id);
         }, 1000, this);
     }
 
