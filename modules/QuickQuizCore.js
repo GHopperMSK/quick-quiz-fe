@@ -149,13 +149,23 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
     }
 
     this.submit = function() {
-        let report = {};
+        let report = {
+            "quiz_id": this.quizId,
+            "website_id": this.websiteId,
+            "slides": []
+        };
         this.slidesHistory.forEach(function(slideId) {
             const slide = this.getSlide(slideId);
-            report[slideId] = slide.getReport();
+            report.slides[slideId] = slide.getReport();
         }, this);
 
         this.reportCallback(report);
+        this.root.classList.add("qq-root-close");
+
+        setTimeout(function(that) {
+            window.quickQuiz.root.parentNode.removeChild(that.root);
+            window.quickQuiz = null;
+        }, 1000, this);
     }
 
     this.prev = function() {
