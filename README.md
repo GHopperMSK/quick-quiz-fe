@@ -15,15 +15,50 @@ Simple information slide. May have a checkbox to make sure the user paid enough 
 
 ```json
 {
-    "id": INT,
-    "type": "INF",
-    "config": {
-        "text": STRING,
-        "next_slide_id": INT,
-        "next_button_label": STRING,
-        "confirment_label": STRING,
-        "timeout_seconds": INT,
-    }
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "INF slide",
+    "description": "A quiz slide type INF",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier of the slide",
+            "type": "integer"
+        },
+        "type": {
+            "const": "INF"
+        },
+        "config": {
+            "type": "object",
+            "properties": {
+                "text": {
+                    "description": "Text which will be shown on the slide",
+                    "type": "string"
+                },
+                "next_slide_id": {
+                    "description": "A slide unique identifier whick will be shown after `Next` button is pressed",
+                    "type": ["integer", "null"]
+                },
+                "next_button_label": {
+                    "description": "Next button label",
+                    "type": "string"
+                },
+                "agreement_label": {
+                    "description": "Agreement text. If exists, the agreement checkbox will be shown and one have to check it in order to be able to move to a next slide",
+                    "type": "string"
+                },
+                "timeout_seconds": {
+                    "description": "The `next` button will be disabled to this amount of seconds",
+                    "type": "integer"
+                },
+                "skippable": {
+                    "description": "Shows whether the slide may be skipped or not",
+                    "type": "boolean"
+                }
+            },
+            "required": [ "text", "next_slide_id" ]
+        }
+    },
+    "required": [ "id", "type", "config" ]
 }
 ```
 
@@ -32,32 +67,62 @@ Many answers are provided but you can choose only one.
 
 ```json
 {
-    "id": INT,
-    "type": "SLT",
-    "config": {
-        "question": STRING,
-        "options": {
-            ID: {
-                "next_slide_id": INT,
-                "label": STRING,
-                "is_default": BOOL
-            },
-            ID: {
-                "next_slide_id": INT,
-                "label": STRING,
-                "is_default": BOOL
-            },
-            ID: {
-                "next_slide_id": INT,
-                "label": STRING,
-                "is_default": BOOL
-            },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "SLT slide",
+    "description": "A quiz slide type SLT",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier of the slide",
+            "type": "integer"
         },
-        "next_button_label": STRING,
-        "skippable": BOOL
-    }
+        "type": {
+            "const": "SLT"
+        },
+        "config": {
+            "type": "object",
+            "properties": {
+                "question": {
+                    "description": "The question which will be shown on the slide",
+                    "type": "string"
+                },
+                "options": {
+                    "description": "The question which will be shown on the slide",
+                    "type": "object",
+                    "properties": {
+                        "next_slide_id": {
+                            "description": "A slide unique identifier whick will be shown after `Next` button is pressed",
+                            "type": ["integer", "null"]
+                        },
+                        "next_button_label": {
+                            "description": "Next button label when this option is selected",
+                            "type": "string"
+                        },
+                        "label": {
+                            "description": "The option text",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["next_slide_id", "label"]
+                },
+                "default_next_button_label": {
+                    "description": "Next button label",
+                    "type": "string"
+                },
+                "timeout_seconds": {
+                    "description": "The `next` button will be disabled to this amount of seconds",
+                    "type": "integer"
+                },
+                "skippable": {
+                    "description": "Shows whether the slide may be skipped or not",
+                    "type": "boolean"
+                }
+            },
+            "required": [ "question", "options"]
+        }
+    },
+    "required": [ "id", "type", "config" ]
 }
-
 ```
 
 ### Multi question
@@ -65,26 +130,61 @@ Many answers are provided and you can choose many of them.
 
 ```json
 {
-    "id": INT,
-    "type": "MLT",
-    "config": {
-        "question": STRING,
-        "options": {
-            ID: {
-                "label": STRING
-            },
-            ID: {
-                "label": STRING
-            },
-            ID: {
-                "label": STRING
-            },
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "SLT slide",
+    "description": "A quiz slide type MLT",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier of the slide",
+            "type": "integer"
         },
-        "next_button_label": STRING,
-        "next_slide_id": INT,
-        "skippable": BOOL,
-        "min_options_count": INT
-    }
+        "type": {
+            "const": "MLT"
+        },
+        "config": {
+            "type": "object",
+            "properties": {
+                "question": {
+                    "description": "The question which will be shown on the slide",
+                    "type": "string"
+                },
+                "options": {
+                    "description": "The question which will be shown on the slide",
+                    "type": "object",
+                    "properties": {
+                        "label": {
+                            "description": "The option text",
+                            "type": "string"
+                        }
+                    },
+                    "required": ["label"]
+                },
+                "next_slide_id": {
+                    "description": "A slide unique identifier whick will be shown after `Next` button is pressed",
+                    "type": ["integer", "null"]
+                },
+                "next_button_label": {
+                    "description": "Next button label",
+                    "type": "string"
+                },
+                "timeout_seconds": {
+                    "description": "The `next` button will be disabled to this amount of seconds",
+                    "type": "integer"
+                },
+                "skippable": {
+                    "description": "Shows whether the slide may be skipped or not",
+                    "type": "boolean"
+                },
+                "min_options_count": {
+                    "description": "One has to check that many options in order to move forward",
+                    "type": "integer"
+                }
+            },
+            "required": [ "question", "options", "next_slide_id"]
+        }
+    },
+    "required": [ "id", "type", "config" ]
 }
 ```
 
@@ -93,16 +193,55 @@ You can type your own anwser.
 
 ```json
 {
-    "id": INT,
-    "type": "OPQ",
-    "config": {
-        "question": STRING,
-        "next_slide_id": INT,
-        "next_button_label": STRING,
-        "skippable": BOOL,
-        "text_form": FORM_INPUT | FORM_TEXTAREA,
-        "min_character_count": INT
-    }
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "OPQ slide",
+    "description": "A quiz slide type OPQ",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier of the slide",
+            "type": "integer"
+        },
+        "type": {
+            "const": "OPQ"
+        },
+        "config": {
+            "type": "object",
+            "properties": {
+                "question": {
+                    "description": "The question which will be shown on the slide",
+                    "type": "string"
+                },
+                "next_slide_id": {
+                    "description": "A slide unique identifier whick will be shown after `Next` button is pressed",
+                    "type": ["integer", "null"]
+                },
+                "text_form_type": {
+                    "description": "Defines the form shape",
+                    "type": "string",
+                    "enum": ["input", "textarea"]
+                },
+                "next_button_label": {
+                    "description": "Next button label",
+                    "type": "string"
+                },
+                "timeout_seconds": {
+                    "description": "The `next` button will be disabled to this amount of seconds",
+                    "type": "integer"
+                },
+                "skippable": {
+                    "description": "Shows whether the slide may be skipped or not",
+                    "type": "boolean"
+                },
+                "min_character_count": {
+                    "description": "One has to type that many characters in order to move forward",
+                    "type": "integer"
+                }
+            },
+            "required": [ "question", "next_slide_id", "text_form"]
+        }
+    },
+    "required": [ "id", "type", "config" ]
 }
 ```
 
@@ -111,18 +250,57 @@ An opportunity to evaluate something on scale.
 
 ```json
 {
-    "id": INT,
-    "type": "SCL",
-    "config": {
-        "question": STRING,
-        "next_slide_id": INT,
-        "min_value": FLOAT,
-        "max_value": FLOAT,
-        "step_size": FLOAT,
-        "next_button_label": STRING,
-        "skippable": BOOL,
-        "text_form": FORM_INPUT | FORM_TEXTAREA,
-        "min_character_count": INT
-    }
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "SCL slide",
+    "description": "A quiz slide type SCL",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier of the slide",
+            "type": "integer"
+        },
+        "type": {
+            "const": "SCL"
+        },
+        "config": {
+            "type": "object",
+            "properties": {
+                "question": {
+                    "description": "The question which will be shown on the slide",
+                    "type": "string"
+                },
+                "next_slide_id": {
+                    "description": "A slide unique identifier whick will be shown after `Next` button is pressed",
+                    "type": ["integer", "null"]
+                },
+                "min_value": {
+                    "description": "Minimal possible value",
+                    "type": "number"
+                },
+                "max_value": {
+                    "description": "Maximum possible value",
+                    "type": "number"
+                },
+                "step_size": {
+                    "description": "Step size",
+                    "type": "number"
+                },
+                "next_button_label": {
+                    "description": "Next button label",
+                    "type": "string"
+                },
+                "timeout_seconds": {
+                    "description": "The `next` button will be disabled to this amount of seconds",
+                    "type": "integer"
+                },
+                "skippable": {
+                    "description": "Shows whether the slide may be skipped or not",
+                    "type": "boolean"
+                }
+            },
+            "required": [ "question", "next_slide_id"]
+        }
+    },
+    "required": [ "id", "type", "config" ]
 }
 ```
