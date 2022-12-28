@@ -49,7 +49,7 @@ function OpenQuestion(id, data)
     this.compileTemplate = function() {
         let html = `<p>${this.data.question}</p>`;
 
-        switch (this.data.text_form) {
+        switch (this.data.text_form_type) {
             case QuickQuizCore.OPQ_TYPE_INPUT:
                 html += `<input type="text" id="qq_opq_slide_answer" value="${this.answer}" />`;
                 break;

@@ -1,0 +1,25 @@
+{
+  "name": "quick-quiz-fe",
+  "version": "1.0.0",
+  "description": "Highly customizable quiz tool for any website.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bundle:dev": "webpack --config webpack.dev.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GHopperMSK/quick-quiz-fe.git"
+  },
+  "keywords": ["quiz", "questionnaire"],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GHopperMSK/quick-quiz-fe/issues"
+  },
+  "homepage": "https://github.com/GHopperMSK/quick-quiz-fe#readme",
+  "devDependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
+  }
+}
