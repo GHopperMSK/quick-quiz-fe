@@ -6,71 +6,79 @@
             "id": 1,
             "type": "INF",
             "config": {
-                "text": "Some text to show on the step",
+                "text": "Welcome to Quick Quiz repository! This is going to be a small presentation of its opportunities.",
                 "next_slide_id": 2,
-                "next_button_label": "Let's start!",
-                "confirment_label": "Do you agree?",
-                "skippable": true,
-                "timeout_seconds": 1
+                "next_button_label": "Show me more!",
+                "agreement_label": "Are you ready?",
+                "skippable": false,
+                "timeout_seconds": 4
             }
         },
         {
             "id": 2,
             "type": "SLT",
             "config": {
-                "question": "Who is the smartest man on the planet?",
+                "question": "This is 'SLT' slide. You can pick only one answer from the list. Each answer leads on a different next slide.",
                 "options": {
                     "1": {
-                        "next_slide_id": 3,
-                        "label": "Ilon Musk"
+                        "next_slide_id": 4,
+                        "label": "First answer"
                     },
                     "2": {
                         "next_slide_id": null,
-                        "label": "Michail Hodorkovsky",
+                        "label": "Second answer (will finish the survey)",
                         "next_button_label": "Submit"
                     },
                     "3": {
-                        "next_slide_id": 1,
-                        "label": "Diego Maradona",
+                        "next_slide_id": 3,
+                        "label": "Custom anwser",
                         "next_button_label": "Next"
                     }
                 },
-                "default_next_button_label": "Default Label",
-                "timeout_seconds": 5
+                "default_next_button_label": "Default Label"
             }
         },
         {
             "id": 3,
-            "type": "MLT",
+            "type": "OPQ",
             "config": {
-                "question": "Which bands do you like?",
-                "options": {
-                    "1": {
-                        "label": "Scorpions"
-                    },
-                    "2": {
-                        "label": "Metallica"
-                    },
-                    "3": {
-                        "label": "Nirvana"
-                    }
-                },
-                "next_button_label": "Multi Next",
-                "next_slide_id": null,
+                "question": "Here you can type your own answer. 'min_character_count` defines minimum character amount which are required to move forward.",
+                "next_slide_id": 4,
+                "next_button_label": "Send",
                 "skippable": true,
-                "min_options_count": 2
+                "text_form_type": "textarea",
+                "min_character_count": 5
             }
         },
         {
             "id": 4,
-            "type": "OPQ",
+            "type": "MLT",
             "config": {
-                "question": "How was your experience?",
-                "next_slide_id": null,
-                "next_button_label": "Send",
+                "question": "This is 'MLT' slide. You can pick multiple answers. 'min_options_count' defines minimum options amount which are required to move forward.",
+                "options": {
+                    "1": {
+                        "label": "Option #1"
+                    },
+                    "2": {
+                        "label": "Option #2"
+                    },
+                    "3": {
+                        "label": "Option #3"
+                    }
+                },
+                "next_button_label": "Multi Next",
+                "next_slide_id": 5,
                 "skippable": false,
-                "text_form": "textarea",
-                "min_character_count": 5
+                "min_options_count": 2
+            }
+        },
+        {
+            "id": 5,
+            "type": "INF",
+            "config": {
+                "text": "That is the final slide. After submitting it will build a report and will pass it to 'callback' function, which has to be specified during initiation process.",
+                "next_slide_id": null,
+                "next_button_label": "Good bye!"
             }
         }
     ]

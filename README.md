@@ -103,6 +103,10 @@ Many answers are provided but you can choose only one.
                             "type": "string"
                         }
                     },
+                    "patternProperties": {
+                        "^[0-9]+$": { "type": "object" }
+                    },
+                    "additionalProperties": false,
                     "required": ["next_slide_id", "label"]
                 },
                 "default_next_button_label": {
@@ -131,7 +135,7 @@ Many answers are provided and you can choose many of them.
 ```json
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "SLT slide",
+    "title": "MLT slide",
     "description": "A quiz slide type MLT",
     "type": "object",
     "properties": {
@@ -158,6 +162,10 @@ Many answers are provided and you can choose many of them.
                             "type": "string"
                         }
                     },
+                    "patternProperties": {
+                        "^[0-9]+$": { "type": "object" }
+                    },
+                    "additionalProperties": false,
                     "required": ["label"]
                 },
                 "next_slide_id": {

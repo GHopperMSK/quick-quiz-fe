@@ -14,7 +14,15 @@
 }
 
 #qq-slides p {
-    margin: 0;
+    margin-top: 0;
+}
+
+#qq_opq_slide_answer {
+    display: block;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 #qq-controls {
