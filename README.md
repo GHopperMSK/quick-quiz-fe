@@ -55,10 +55,10 @@ Simple information slide. May have a checkbox to make sure the user paid enough 
                     "type": "boolean"
                 }
             },
-            "required": [ "text", "next_slide_id" ]
+            "required": ["text", "next_slide_id"]
         }
     },
-    "required": [ "id", "type", "config" ]
+    "required": ["id", "type", "config"]
 }
 ```
 
@@ -122,10 +122,10 @@ Many answers are provided but you can choose only one.
                     "type": "boolean"
                 }
             },
-            "required": [ "question", "options"]
+            "required": ["question", "options"]
         }
     },
-    "required": [ "id", "type", "config" ]
+    "required": ["id", "type", "config" ]
 }
 ```
 
@@ -189,10 +189,10 @@ Many answers are provided and you can choose many of them.
                     "type": "integer"
                 }
             },
-            "required": [ "question", "options", "next_slide_id"]
+            "required": ["question", "options", "next_slide_id"]
         }
     },
-    "required": [ "id", "type", "config" ]
+    "required": ["id", "type", "config"]
 }
 ```
 
@@ -246,21 +246,21 @@ You can type your own anwser.
                     "type": "integer"
                 }
             },
-            "required": [ "question", "next_slide_id", "text_form"]
+            "required": ["question", "next_slide_id", "text_form"]
         }
     },
-    "required": [ "id", "type", "config" ]
+    "required": ["id", "type", "config" ]
 }
 ```
 
-### Scale slide (doesn't implemented yet)
+### Rate slide (doesn't implemented yet)
 An opportunity to evaluate something on scale.
 
 ```json
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "SCL slide",
-    "description": "A quiz slide type SCL",
+    "title": "RTE slide",
+    "description": "A quiz slide type RTE",
     "type": "object",
     "properties": {
         "id": {
@@ -268,13 +268,13 @@ An opportunity to evaluate something on scale.
             "type": "integer"
         },
         "type": {
-            "const": "SCL"
+            "const": "RTE"
         },
         "config": {
             "type": "object",
             "properties": {
-                "question": {
-                    "description": "The question which will be shown on the slide",
+                "text": {
+                    "description": "The text which will be shown on the slide",
                     "type": "string"
                 },
                 "next_slide_id": {
@@ -287,10 +287,6 @@ An opportunity to evaluate something on scale.
                 },
                 "max_value": {
                     "description": "Maximum possible value",
-                    "type": "number"
-                },
-                "step_size": {
-                    "description": "Step size",
                     "type": "number"
                 },
                 "next_button_label": {
@@ -306,9 +302,9 @@ An opportunity to evaluate something on scale.
                     "type": "boolean"
                 }
             },
-            "required": [ "question", "next_slide_id"]
+            "required": ["text", "next_slide_id"]
         }
     },
-    "required": [ "id", "type", "config" ]
+    "required": ["id", "type", "config" ]
 }
 ```

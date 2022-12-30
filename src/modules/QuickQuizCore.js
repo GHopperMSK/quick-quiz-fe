@@ -1,25 +1,27 @@
-import BaseSlide from './BaseSlide.js';
+import SlideFactory from './SlideFactory.js';
 
-function QuickQuizCore(quizId, websiteId, rootElement, reportCallback) 
+class QuickQuizCore
 {
-    this.quizId = quizId;
-    this.websiteId = websiteId;
-    this.version = null;
+    constructor(quizId, websiteId, rootElement, reportCallback) {
+        this.quizId = quizId;
+        this.websiteId = websiteId;
+        this.version = null;
+    
+        this.reportCallback = reportCallback;
+    
+        this.initSlide = null;
+        this.slides = {};
+        this.slidesHistory = [];
+    
+        this.root = rootElement;
+        this.nextButton = null;
+        this.prevButton = null;
+        this.slidesBlock = null;
+    
+        this.isInitialized = false;
+    }
 
-    this.reportCallback = reportCallback;
-
-    this.initSlide = null;
-    this.slides = {};
-    this.slidesHistory = [];
-
-    this.root = rootElement;
-    this.nextButton = null;
-    this.prevButton = null;
-    this.slidesBlock = null;
-
-    this.isInitialized = false;
-
-    this.init = function(jsonConfig) {
+    init(jsonConfig) {
         if (this.isInitialized == true) {
             return
         }
@@ -60,7 +62,7 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         this.render();
     }
 
-    this.parseConfig = function(cnf) {
+    parseConfig(cnf) {
         // TODO: validate Config
 
         const rawConfig = JSON.parse(cnf);
@@ -68,12 +70,12 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         this.initSlide = rawConfig.init_slide;
 
         rawConfig.slides.forEach(function(slideConfig) {
-            const slide = BaseSlide.createSlide(slideConfig);
+            const slide = SlideFactory.createSlide(slideConfig);
             this.slides[slide.id] = slide;
         }, this);
     }
 
-    this.setEventListeners = function() {
+    setEventListeners() {
         this.root.addEventListener('qq-slide-event', (event) => {
             const currentSlide = this.getCurrentSlide();
             this.renderControlElements(currentSlide.id);
@@ -81,7 +83,7 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         });
     }
 
-    this.getCurrentSlide = function() {
+    getCurrentSlide() {
         let currentStepId = this.initStep;
         const historyLength = this.slidesHistory.length;
         if (historyLength != 0) {
@@ -90,17 +92,17 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         return this.getSlide(currentStepId);
     }
 
-    this.getSlide = function(slideId) {
+    getSlide(slideId) {
         return this.slides[slideId];
     }
 
-    this.render = function() {
+    render() {
         let currentSlide = this.getCurrentSlide();
         currentSlide.render(this.slidesBlock);
     }
 
-    this.renderControlElements = function(slideId) {
-        if (this.isFirstStep()) {
+    renderControlElements(slideId) {
+        if (this.isFirstSlide()) {
             this.prevButton.setAttribute("disabled", true);
         } else {
             this.prevButton.removeAttribute("disabled");
@@ -136,7 +138,7 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         this.nextButton.innerText = nextButtonLabel;
     }
 
-    this.next = function() {
+    next() {
         const currentStep = this.getCurrentSlide();
         const nextId = currentStep.getNextStep();
         if (nextId == null) {
@@ -148,7 +150,7 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         }
     }
 
-    this.submit = function() {
+    submit() {
         let report = {
             "quiz_id": this.quizId,
             "website_id": this.websiteId,
@@ -168,53 +170,18 @@ function QuickQuizCore(quizId, websiteId, rootElement, reportCallback)
         }, 1000, this);
     }
 
-    this.prev = function() {
-        if (this.isFirstStep()) {
+    prev() {
+        if (this.isFirstSlide()) {
             return;
         }
         this.slidesHistory.pop();
         this.render();
     }
 
-    this.isFirstStep = function() {
+    isFirstSlide() {
         return this.slidesHistory.length == 1;
     }
 }
-
-Object.defineProperty(QuickQuizCore, 'INFO_SLIDE', {
-    value: "INF",
-    writable: false,
-    enumerable: false,
-    configurable: false,
-});
-
-Object.defineProperty(QuickQuizCore, 'SELECT_QUESTION', {
-    value: "SLT",
-    writable: false,
-    enumerable: false,
-    configurable: false,
-});
-
-Object.defineProperty(QuickQuizCore, 'MULTI_QUESTION', {
-    value: "MLT",
-    writable: false,
-    enumerable: false,
-    configurable: false,
-});
-
-Object.defineProperty(QuickQuizCore, 'OPEN_QUESTION', {
-    value: "OPQ",
-    writable: false,
-    enumerable: false,
-    configurable: false,
-});
-
-Object.defineProperty(QuickQuizCore, 'SCALE_SLIDE', {
-    value: "SCL",
-    writable: false,
-    enumerable: false,
-    configurable: false,
-});
 
 Object.defineProperty(QuickQuizCore, "DEFAULT_PERV_BUTTON_LABEL", {
     value: "<<",
@@ -239,20 +206,6 @@ Object.defineProperty(QuickQuizCore, "DEFAULT_SKIP_BUTTON_LABEL", {
 
 Object.defineProperty(QuickQuizCore, "EVENT_INIT_TYPE", {
     value: "qq-init",
-    writable: false,
-    configurable: false,
-    enumerable: false
-});
-
-Object.defineProperty(QuickQuizCore, "OPQ_TYPE_INPUT", {
-    value: "input",
-    writable: false,
-    configurable: false,
-    enumerable: false
-});
-
-Object.defineProperty(QuickQuizCore, "OPQ_TYPE_TEXTAREA", {
-    value: "textarea",
     writable: false,
     configurable: false,
     enumerable: false

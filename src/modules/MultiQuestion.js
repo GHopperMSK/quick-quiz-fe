@@ -1,27 +1,29 @@
 import BaseSlide from './BaseSlide.js';
 
-function MultiQuestion(id, data) 
+class MultiQuestion extends BaseSlide
 {
-    BaseSlide.call(this, id, data);
-    this.optionIds = [];
+    constructor(id, data) {
+        super(id, data);
+        this.optionIds = [];
+    }
 
-    this.getNextStep = function() {
+    getNextStep() {
         return this.data.next_slide_id;
     }
     
-    this.isNextButtonEnabled = function() {
+    isNextButtonEnabled() {
         const minCount = this.optionIds.min_options_count != null ? this.optionIds.min_options_count : 1;
         return this.optionIds.length > minCount;
     }
     
-    this.getNextButtonLabel = function() {
+    getNextButtonLabel() {
         if ("next_button_label" in this.data) {
             return this.data.next_button_label;
         }
         return null;
     }
     
-    this.setOptionId = function(optionId) {
+    setOptionId(optionId) {
         const optionIndex = this.optionIds.indexOf(optionId);
         if (optionIndex == -1) {
             this.optionIds.push(optionId);
@@ -39,18 +41,18 @@ function MultiQuestion(id, data)
         this.elem.dispatchEvent(qqSlideEvent); 
     }
 
-    this.render = function(elem) {
+    render(elem) {
         this.elem = elem;
         elem.innerHTML = this.compileTemplate();
         for (const optionId in this.data.options) {
-            document.getElementById("qq_mlt_slide_option_" + optionId)
+            document.getElementById(`qq_mlt_slide_option_${optionId}`)
                 .addEventListener('click', () => { this.setOptionId(optionId) });
         }
 
         BaseSlide.prototype.render.call(this, elem);
     }
     
-    this.compileTemplate = function() {
+    compileTemplate() {
         let html = `<p>${this.data.question}</p>`;
         for (const optionId in this.data.options) {
             html += `<input type="checkbox"
@@ -62,7 +64,7 @@ function MultiQuestion(id, data)
         return html;
     }
 
-    this.getReport = function() {
+    getReport() {
         return {
             "checked_options": this.optionIds
         };

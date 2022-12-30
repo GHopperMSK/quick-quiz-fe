@@ -1,12 +1,14 @@
 import BaseSlide from './BaseSlide.js';
 
-function InfoSlide(id, data)
+class InfoSlide extends BaseSlide
 {
-    BaseSlide.call(this, id, data);
-    this.isConfirmRequired = null;
-    this.isConfirmed = false;
+    constructor(id, data) {
+        super(id, data);
+        this.isConfirmRequired = null;
+        this.isConfirmed = false;
+    }
 
-    this.compileTemplate = function() {
+    compileTemplate() {
         let html = `<p class="text-block">${this.data.text}</p>`;
         if (this.getIfConfirmRequired()) {
             html += `<input type="checkbox"
@@ -20,7 +22,7 @@ function InfoSlide(id, data)
         return html;
     }
 
-    this.render = function(elem) {
+    render(elem) {
         this.elem = elem;
         elem.innerHTML = this.compileTemplate();
         if (this.getIfConfirmRequired()) {
@@ -30,7 +32,7 @@ function InfoSlide(id, data)
         BaseSlide.prototype.render.call(this, elem);
     }
 
-    this.getIfConfirmRequired = function() {
+    getIfConfirmRequired() {
         if (this.isConfirmRequired != null) {
             return this.isConfirmRequired;
         }
@@ -44,7 +46,7 @@ function InfoSlide(id, data)
         return this.isConfirmRequired;
     }
 
-    this.markAgreement = function() {
+    markAgreement() {
         this.isConfirmed = !this.isConfirmed;
         
         const qqSlideEvent = new CustomEvent("qq-slide-event", {
@@ -57,11 +59,11 @@ function InfoSlide(id, data)
         this.elem.dispatchEvent(qqSlideEvent); 
     }
 
-    this.getNextStep = function() {
+    getNextStep() {
         return this.data.next_slide_id;
     };
     
-    this.isNextButtonEnabled = function() {
+    isNextButtonEnabled() {
         if (this.getIfConfirmRequired()) {
             return this.isConfirmed;
         }
@@ -69,14 +71,14 @@ function InfoSlide(id, data)
         return true;
     }
     
-    this.getNextButtonLabel = function() {
+    getNextButtonLabel() {
         if (this.data.hasOwnProperty("next_button_label")) {
             return this.data.next_button_label;
         }
         return null;
     }
 
-    this.getReport = function() {
+    getReport() {
         let report = {};
         if (this.getIfConfirmRequired()) {
             report["is_checked"] = this.isConfirmed;

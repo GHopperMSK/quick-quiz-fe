@@ -1,16 +1,18 @@
 import BaseSlide from './BaseSlide.js';
 import QuickQuizCore from "./QuickQuizCore.js";
 
-function OpenQuestion(id, data) 
+class OpenQuestion extends BaseSlide
 {
-    BaseSlide.call(this, id, data);
-    this.answer = "";
+    constructor(id, data) {
+        super(id, data);
+        this.answer = "";
+    }
 
-    this.getNextStep = function() {
+    getNextStep() {
         return this.data.next_slide_id;
     }
     
-    this.isNextButtonEnabled = function() {
+    isNextButtonEnabled() {
         if (this.data.min_character_count != null) {
             return this.answer.length > this.data.min_character_count;
         }
@@ -18,14 +20,14 @@ function OpenQuestion(id, data)
         return true;
     }
     
-    this.getNextButtonLabel = function() {
+    getNextButtonLabel() {
         if ("next_button_label" in this.data) {
             return this.data.next_button_label;
         }
         return null;
     }
     
-    this.changeAnswer = function() {
+    changeAnswer() {
         this.answer = document.getElementById("qq_opq_slide_answer").value;
     
         const qqSlideEvent = new CustomEvent("qq-slide-event", {
@@ -38,7 +40,7 @@ function OpenQuestion(id, data)
         this.elem.dispatchEvent(qqSlideEvent);
     }
 
-    this.render = function(elem) {
+    render(elem) {
         this.elem = elem;
         elem.innerHTML = this.compileTemplate();
         document.getElementById("qq_opq_slide_answer").addEventListener('input', () => { this.changeAnswer() });
@@ -46,14 +48,14 @@ function OpenQuestion(id, data)
         BaseSlide.prototype.render.call(this, elem);
     }
     
-    this.compileTemplate = function() {
+    compileTemplate() {
         let html = `<p>${this.data.question}</p>`;
 
         switch (this.data.text_form_type) {
-            case QuickQuizCore.OPQ_TYPE_INPUT:
+            case OpenQuestion.OPQ_TYPE_INPUT:
                 html += `<input type="text" id="qq_opq_slide_answer" value="${this.answer}" />`;
                 break;
-            case QuickQuizCore.OPQ_TYPE_TEXTAREA:
+            case OpenQuestion.OPQ_TYPE_TEXTAREA:
                 html += `<textarea id="qq_opq_slide_answer">${this.answer}</textarea>`;
                 break;
             default:
@@ -63,11 +65,25 @@ function OpenQuestion(id, data)
         return html;
     }
 
-    this.getReport = function() {
+    getReport() {
         return {
             "answer": this.answer
         };
     }
 }
+
+Object.defineProperty(OpenQuestion, "OPQ_TYPE_INPUT", {
+    value: "input",
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
+
+Object.defineProperty(OpenQuestion, "OPQ_TYPE_TEXTAREA", {
+    value: "textarea",
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
 
 export default OpenQuestion;
