@@ -3,6 +3,7 @@ import InfoSlide from "./InfoSlide.js";
 import SelectQuestion from "./SelectQuestion.js";
 import MultiQuestion from "./MultiQuestion.js";
 import OpenQuestion from "./OpenQuestion.js";
+import RateSlide from "./RateSlide.js";
 
 class SlideFactory
 {
@@ -16,6 +17,8 @@ class SlideFactory
                 return new MultiQuestion(slideData.id, slideData.config);
             case BaseSlide.OPEN_QUESTION:
                 return new OpenQuestion(slideData.id, slideData.config);
+            case BaseSlide.RATE_SLIDE:
+                return new RateSlide(slideData.id, slideData.config);
             default:
                 throw "Unknown question type!";
         }

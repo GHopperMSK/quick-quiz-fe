@@ -26,10 +26,10 @@ class InfoSlide extends BaseSlide
         this.elem = elem;
         elem.innerHTML = this.compileTemplate();
         if (this.getIfConfirmRequired()) {
-            document.getElementById("qq_inf_slide_confirm_checkbox").addEventListener('click', () => { this.markAgreement() });
+            document.getElementById("qq_inf_slide_confirm_checkbox").addEventListener('click', () => { this.clickAgreement() });
         }
 
-        BaseSlide.prototype.render.call(this, elem);
+        BaseSlide.prototype.afterRender.call(this, elem);
     }
 
     getIfConfirmRequired() {
@@ -37,16 +37,12 @@ class InfoSlide extends BaseSlide
             return this.isConfirmRequired;
         }
 
-        if (this.data.hasOwnProperty("agreement_label")) {
-            this.isConfirmRequired = true;
-        } else {
-            this.isConfirmRequired = false;
-        }
+        this.isConfirmRequired = this.data.hasOwnProperty("agreement_label") ? true : false;
 
         return this.isConfirmRequired;
     }
 
-    markAgreement() {
+    clickAgreement() {
         this.isConfirmed = !this.isConfirmed;
         
         const qqSlideEvent = new CustomEvent("qq-slide-event", {

@@ -75,6 +75,16 @@
         },
         {
             "id": 5,
+            "type": "RTE",
+            "config": {
+                "text": "This is 'RTE' slide, which allows one to rate on a configurable scale",
+                "next_slide_id": 6,
+                "min_value": 1,
+                "max_value": 5
+            }
+        },
+        {
+            "id": 6,
             "type": "INF",
             "config": {
                 "text": "That is the final slide. After submitting it will build a report and will pass it to 'callback' function, which has to be specified during initiation process.",

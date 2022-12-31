@@ -13,7 +13,7 @@ class OpenQuestion extends BaseSlide
     }
     
     isNextButtonEnabled() {
-        if (this.data.min_character_count != null) {
+        if ("min_character_count" in this.data) {
             return this.answer.length > this.data.min_character_count;
         }
 
@@ -45,7 +45,7 @@ class OpenQuestion extends BaseSlide
         elem.innerHTML = this.compileTemplate();
         document.getElementById("qq_opq_slide_answer").addEventListener('input', () => { this.changeAnswer() });
 
-        BaseSlide.prototype.render.call(this, elem);
+        BaseSlide.prototype.afterRender.call(this, elem);
     }
     
     compileTemplate() {

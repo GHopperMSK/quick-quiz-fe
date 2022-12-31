@@ -9,7 +9,7 @@ class BaseSlide
         this.elem = null;    
     }
 
-    render(elem) {
+    afterRender(elem) {
         const timeout = this.getTimeout();
         if (timeout != 0) {
             const intervalId = setInterval(function(that) {
@@ -36,14 +36,14 @@ class BaseSlide
                 "slide_id": slideId,
             }
         });
-        elem.dispatchEvent(qqSlideEvent); 
+        elem.dispatchEvent(qqSlideEvent);
     }
     
     getTimeout() {
         if (this.timeout != null) {
             return this.timeout - this.timeoutCounter;
         }
-    
+
         if (this.data.hasOwnProperty("timeout_seconds")) {
             this.timeout = this.data.timeout_seconds;
         } else {
@@ -58,7 +58,7 @@ class BaseSlide
             return this.skipabble;
         }
     
-        this.skippable = this.data.skippable != null ? this.data.skippable : false;
+        this.skippable = this.data.hasOwnProperty("skippable") ? this.data.skippable : false;
     
         return this.skippable;
     };

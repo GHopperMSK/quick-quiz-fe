@@ -253,7 +253,7 @@ You can type your own anwser.
 }
 ```
 
-### Rate slide (doesn't implemented yet)
+### Rate slide
 An opportunity to evaluate something on scale.
 
 ```json

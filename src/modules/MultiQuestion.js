@@ -12,8 +12,8 @@ class MultiQuestion extends BaseSlide
     }
     
     isNextButtonEnabled() {
-        const minCount = this.optionIds.min_options_count != null ? this.optionIds.min_options_count : 1;
-        return this.optionIds.length > minCount;
+        const minCount = this.data.hasOwnProperty("min_options_count") ? this.data.min_options_count : 1;
+        return this.optionIds.length >= minCount;
     }
     
     getNextButtonLabel() {
@@ -49,7 +49,7 @@ class MultiQuestion extends BaseSlide
                 .addEventListener('click', () => { this.setOptionId(optionId) });
         }
 
-        BaseSlide.prototype.render.call(this, elem);
+        BaseSlide.prototype.afterRender.call(this, elem);
     }
     
     compileTemplate() {
