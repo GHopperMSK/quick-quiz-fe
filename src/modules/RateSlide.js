@@ -1,4 +1,5 @@
 import BaseSlide from './BaseSlide.js';
+import QuickQuizCore from './QuickQuizCore.js';
 
 class RateSlide extends BaseSlide
 {
@@ -19,7 +20,7 @@ class RateSlide extends BaseSlide
     
     getNextButtonLabel() {
         if ("next_button_label" in this.data) {
-            return this.data.next_button_label;
+            return QuickQuizCore.sanitizeHtml(this.data.next_button_label);
         }
         return null;
     }
@@ -50,7 +51,7 @@ class RateSlide extends BaseSlide
     }
 
     compileTemplate() {
-        let html = `<p>${this.data.text}</p>`;
+        let html = `<p>${QuickQuizCore.sanitizeHtml(this.data.text)}</p>`;
         html += "<div class=\"rate\">";
         if ("min_value" in this.data) {
             this.minValue = this.data.min_value;

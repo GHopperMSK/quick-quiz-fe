@@ -1,4 +1,5 @@
 import BaseSlide from './BaseSlide.js';
+import QuickQuizCore from './QuickQuizCore.js';
 
 class MultiQuestion extends BaseSlide
 {
@@ -18,7 +19,7 @@ class MultiQuestion extends BaseSlide
     
     getNextButtonLabel() {
         if ("next_button_label" in this.data) {
-            return this.data.next_button_label;
+            return QuickQuizCore.sanitizeHtml(this.data.next_button_label);
         }
         return null;
     }
@@ -53,13 +54,15 @@ class MultiQuestion extends BaseSlide
     }
     
     compileTemplate() {
-        let html = `<p>${this.data.question}</p>`;
+        let html = `<p>${QuickQuizCore.sanitizeHtml(this.data.question)}</p>`;
         for (const optionId in this.data.options) {
             html += `<input type="checkbox"
                 id="qq_mlt_slide_option_${optionId}"
                 value="${optionId}"
                 ${(this.optionIds.indexOf(parseInt(optionId)) != -1) ? "checked" : ""} />`;
-            html += `<label for="qq_mlt_slide_option_${optionId}">${this.data.options[optionId].label}</label><br />`;
+            html += `<label for="qq_mlt_slide_option_${optionId}">
+                ${QuickQuizCore.sanitizeHtml(this.data.options[optionId].label)}
+                </label><br />`;
         }
         return html;
     }

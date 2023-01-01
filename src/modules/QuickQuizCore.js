@@ -44,7 +44,6 @@ class QuickQuizCore
             return false;
         };
         this.prevButton.innerText = QuickQuizCore.DEFAULT_PERV_BUTTON_LABEL;
-
         controlDiv.appendChild(this.prevButton);
 
         this.nextButton = document.createElement('button');
@@ -84,12 +83,12 @@ class QuickQuizCore
     }
 
     getCurrentSlide() {
-        let currentStepId = this.initStep;
+        let currentSlideId = this.initSlide;
         const historyLength = this.slidesHistory.length;
         if (historyLength != 0) {
-            currentStepId = this.slidesHistory[historyLength - 1];
+            currentSlideId = this.slidesHistory[historyLength - 1];
         }
-        return this.getSlide(currentStepId);
+        return this.getSlide(currentSlideId);
     }
 
     getSlide(slideId) {
@@ -180,6 +179,20 @@ class QuickQuizCore
 
     isFirstSlide() {
         return this.slidesHistory.length == 1;
+    }
+
+    static sanitizeHtml(string) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            "`": '&#x27;',
+            "/": '&grave;',
+        };
+        const reg = /[&<>"'`/]/ig;
+        return string.replace(reg, (match)=>(map[match]));
     }
 }
 

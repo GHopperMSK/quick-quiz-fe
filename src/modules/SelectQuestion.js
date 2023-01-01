@@ -1,4 +1,5 @@
 import BaseSlide from './BaseSlide.js';
+import QuickQuizCore from './QuickQuizCore.js';
 
 class SelectQuestion extends BaseSlide
 {
@@ -25,14 +26,18 @@ class SelectQuestion extends BaseSlide
         }
 
         if (nextButtonLabel != null) {
-            return nextButtonLabel;
+            return QuickQuizCore.sanitizeHtml(nextButtonLabel);
         }
 
         if ("default_next_button_label" in this.data) {
             nextButtonLabel = this.data.default_next_button_label;
         }
     
-        return nextButtonLabel;
+        if (nextButtonLabel != null) {
+            return QuickQuizCore.sanitizeHtml(nextButtonLabel);
+        }
+
+        return null;
     }
     
     setOptionId(optionId) {
@@ -61,7 +66,7 @@ class SelectQuestion extends BaseSlide
 
     compileTemplate() {
         let html = "";
-        html += `<p>${this.data.question}</p>`;
+        html += `<p>${QuickQuizCore.sanitizeHtml(this.data.question)}</p>`;
         for (const optionId in this.data.options) {
             html += `<input
                 type="radio"
@@ -70,7 +75,9 @@ class SelectQuestion extends BaseSlide
                 value="${optionId}"
                 ${(this.optionId == optionId) ? "checked" : ""} />
             `;
-            html += `<label for='qq_slt_slide_option_${optionId}'>"${this.data.options[optionId].label}</label><br />`;
+            html += `<label for='qq_slt_slide_option_${optionId}'>
+                ${QuickQuizCore.sanitizeHtml(this.data.options[optionId].label)}
+                </label><br />`;
         }
         return html;
     }

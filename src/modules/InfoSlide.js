@@ -1,4 +1,5 @@
 import BaseSlide from './BaseSlide.js';
+import QuickQuizCore from './QuickQuizCore.js';
 
 class InfoSlide extends BaseSlide
 {
@@ -9,7 +10,7 @@ class InfoSlide extends BaseSlide
     }
 
     compileTemplate() {
-        let html = `<p class="text-block">${this.data.text}</p>`;
+        let html = `<p class="text-block">${QuickQuizCore.sanitizeHtml(this.data.text)}</p>`;
         if (this.getIfConfirmRequired()) {
             html += `<input type="checkbox"
                 id="qq_inf_slide_confirm_checkbox"
@@ -69,7 +70,7 @@ class InfoSlide extends BaseSlide
     
     getNextButtonLabel() {
         if (this.data.hasOwnProperty("next_button_label")) {
-            return this.data.next_button_label;
+            return QuickQuizCore.sanitizeHtml(this.data.next_button_label);
         }
         return null;
     }

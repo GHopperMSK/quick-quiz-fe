@@ -13,8 +13,7 @@
                 "skippable": false,
                 "timeout_seconds": 4
             }
-        }
-        ,
+        },
         {
             "id": 2,
             "type": "SLT",

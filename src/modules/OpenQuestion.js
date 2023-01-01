@@ -22,7 +22,7 @@ class OpenQuestion extends BaseSlide
     
     getNextButtonLabel() {
         if ("next_button_label" in this.data) {
-            return this.data.next_button_label;
+            return QuickQuizCore.sanitizeHtml(this.data.next_button_label);
         }
         return null;
     }
@@ -49,7 +49,7 @@ class OpenQuestion extends BaseSlide
     }
     
     compileTemplate() {
-        let html = `<p>${this.data.question}</p>`;
+        let html = `<p>${QuickQuizCore.sanitizeHtml(this.data.question)}</p>`;
 
         switch (this.data.text_form_type) {
             case OpenQuestion.OPQ_TYPE_INPUT:
