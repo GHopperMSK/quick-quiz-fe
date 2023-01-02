@@ -1,4 +1,5 @@
-import SlideFactory from './SlideFactory.js';
+import SlideFactory from '../SlideFactory.js';
+import './core.css';
 
 class QuickQuizCore
 {

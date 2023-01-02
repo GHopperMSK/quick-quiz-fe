@@ -1,0 +1,66 @@
+.qq-root {
+    background-color: rgb(188, 188, 188);
+    position: fixed;
+    bottom: 0;
+    right: 3em;
+    width: 15em;
+    padding: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    animation-name: fadeInBottom
+}
+
+@keyframes fadeInBottom {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    to { opacity: 1 }
+}
+
+#qq-slides {
+    margin-bottom: 10px;
+}
+
+#qq-slides p {
+    margin-top: 0;
+}
+
+#qq-controls {
+    display: flex;
+    justify-content:space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    clear: both;
+}
+
+#qq-controls button {
+    flex: auto;
+}
+
+#qq-controls > button:first-child {
+    margin-right: 2em;
+}
+
+#qq-controls > button:last-child {
+    margin-left: 2em;
+}
+
+.qq-root {
+    animation-duration: 0.3s;
+    animation-fill-mode: both;
+}
+
+.qq-root-close {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    animation-name: fadeOutBottom
+}
+
+@keyframes fadeOutBottom {
+    from {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+    to { opacity: 0 }
+}

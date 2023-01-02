@@ -1,13 +1,18 @@
 const path = require('path');
 
+const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+
 module.exports = {
-    entry: './src/main.js',
+    entry: {'QuickQuiz': './src/main.js'},
     mode: 'development',
     output: {
       filename: 'QuickQuiz.js',
       path: path.resolve(__dirname, 'dist'),
       clean: true,
     },
+    plugins: [
+        new MiniCssExtractPlugin(),
+    ],
     module: {
         rules: [
             {
@@ -16,6 +21,13 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader'
+                ]
             }
         ]
     }

@@ -1,4 +1,4 @@
-import QuickQuizCore from './modules/QuickQuizCore.js';
+import QuickQuizCore from './core/QuickQuizCore.js';
 
 window.addEventListener(QuickQuizCore.EVENT_INIT_TYPE, (event) => {
     window.quickQuiz = new QuickQuizCore(

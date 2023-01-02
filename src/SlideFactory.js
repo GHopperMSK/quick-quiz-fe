@@ -1,9 +1,9 @@
-import BaseSlide from './BaseSlide.js';
-import InfoSlide from "./InfoSlide.js";
-import SelectQuestion from "./SelectQuestion.js";
-import MultiQuestion from "./MultiQuestion.js";
-import OpenQuestion from "./OpenQuestion.js";
-import RateSlide from "./RateSlide.js";
+import BaseSlide from './slides/BaseSlide/BaseSlide.js';
+import InfoSlide from "./slides/InfoSlide/InfoSlide.js";
+import SelectQuestion from "./slides/SelectQuestion/SelectQuestion.js";
+import MultiQuestion from "./slides/MultiQuestion/MultiQuestion.js";
+import OpenQuestion from "./slides/OpenQUestion/OpenQuestion.js";
+import RateSlide from "./slides/RateSlide/RateSlide.js";
 
 class SlideFactory
 {

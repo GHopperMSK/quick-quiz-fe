@@ -1,5 +1,6 @@
-import BaseSlide from './BaseSlide.js';
-import QuickQuizCore from "./QuickQuizCore.js";
+import BaseSlide from '../BaseSlide/BaseSlide.js';
+import QuickQuizCore from "../../core/QuickQuizCore.js";
+import "./OpenQuestion.css";
 
 class OpenQuestion extends BaseSlide
 {
