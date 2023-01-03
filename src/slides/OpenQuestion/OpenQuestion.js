@@ -8,10 +8,6 @@ class OpenQuestion extends BaseSlide
         super(id, data);
         this.answer = "";
     }
-
-    getNextStep() {
-        return this.data.next_slide_id;
-    }
     
     isNextButtonEnabled() {
         if ("min_character_count" in this.data) {
@@ -20,14 +16,7 @@ class OpenQuestion extends BaseSlide
 
         return true;
     }
-    
-    getNextButtonLabel() {
-        if ("next_button_label" in this.data) {
-            return QuickQuizCore.sanitizeHtml(this.data.next_button_label);
-        }
-        return null;
-    }
-    
+
     changeAnswer() {
         this.answer = document.getElementById("qq_opq_slide_answer").value;
     
@@ -50,7 +39,7 @@ class OpenQuestion extends BaseSlide
     }
     
     compileTemplate() {
-        let html = `<p>${QuickQuizCore.sanitizeHtml(this.data.question)}</p>`;
+        let html = `<p>${BaseSlide.sanitizeHtml(this.data.question)}</p>`;
 
         switch (this.data.text_form_type) {
             case OpenQuestion.OPQ_TYPE_INPUT:

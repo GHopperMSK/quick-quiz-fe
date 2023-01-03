@@ -4,7 +4,7 @@
 A web service which provides a possibility to add questionnaires to any website. Highly customizable questions and design. Rich export opportunities and in house report generator.
 
 ## Slides types
-A quiz consists of several slides (steps), which of them provides information or asks a question. A user moves from one to another through chain of such slides until the very end. Eventually a report is generated and sends to a server.
+A quiz consists of several slides, which of them provides information or asks a question. A user moves from one to another through chain of such slides until the very end. Eventually a report is generated and sends to a server.
 
 The chain of the slides and each of them are configured with `json` which contain all necessary information for the quiz.
 

@@ -9,9 +9,20 @@ class BaseSlide
         this.elem = null;    
     }
 
+    getNextSlide() {
+        return this.data.next_slide_id;
+    };
+
+    getNextButtonLabel() {
+        if (this.data.hasOwnProperty("next_button_label")) {
+            return BaseSlide.sanitizeHtml(this.data.next_button_label);
+        }
+        return null;
+    }
+
     afterRender(elem) {
         const timeout = this.getTimeout();
-        if (timeout != 0) {
+        if (!this.isSkippable() && timeout != 0) {
             const intervalId = setInterval(function(that) {
                 if (window.quickQuiz.getCurrentSlide().id != that.id) {
                     clearInterval(intervalId);
@@ -62,6 +73,20 @@ class BaseSlide
     
         return this.skippable;
     };
+
+    static sanitizeHtml(string) {
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#x27;',
+            "`": '&#x27;',
+            "/": '&grave;',
+        };
+        const reg = /[&<>"'`/]/ig;
+        return string.replace(reg, (match)=>(map[match]));
+    }
 }
 
 Object.defineProperty(BaseSlide, 'INFO_SLIDE', {

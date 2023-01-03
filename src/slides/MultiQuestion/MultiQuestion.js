@@ -7,21 +7,10 @@ class MultiQuestion extends BaseSlide
         super(id, data);
         this.optionIds = [];
     }
-
-    getNextStep() {
-        return this.data.next_slide_id;
-    }
     
     isNextButtonEnabled() {
         const minCount = this.data.hasOwnProperty("min_options_count") ? this.data.min_options_count : 1;
         return this.optionIds.length >= minCount;
-    }
-    
-    getNextButtonLabel() {
-        if ("next_button_label" in this.data) {
-            return QuickQuizCore.sanitizeHtml(this.data.next_button_label);
-        }
-        return null;
     }
     
     setOptionId(optionId) {
@@ -54,14 +43,14 @@ class MultiQuestion extends BaseSlide
     }
     
     compileTemplate() {
-        let html = `<p>${QuickQuizCore.sanitizeHtml(this.data.question)}</p>`;
+        let html = `<p>${BaseSlide.sanitizeHtml(this.data.question)}</p>`;
         for (const optionId in this.data.options) {
             html += `<input type="checkbox"
                 id="qq_mlt_slide_option_${optionId}"
                 value="${optionId}"
                 ${(this.optionIds.indexOf(parseInt(optionId)) != -1) ? "checked" : ""} />`;
             html += `<label for="qq_mlt_slide_option_${optionId}">
-                ${QuickQuizCore.sanitizeHtml(this.data.options[optionId].label)}
+                ${BaseSlide.sanitizeHtml(this.data.options[optionId].label)}
                 </label><br />`;
         }
         return html;

@@ -10,7 +10,7 @@ class InfoSlide extends BaseSlide
     }
 
     compileTemplate() {
-        let html = `<p class="text-block">${QuickQuizCore.sanitizeHtml(this.data.text)}</p>`;
+        let html = `<p class="text-block">${BaseSlide.sanitizeHtml(this.data.text)}</p>`;
         if (this.getIfConfirmRequired()) {
             html += `<input type="checkbox"
                 id="qq_inf_slide_confirm_checkbox"
@@ -55,10 +55,6 @@ class InfoSlide extends BaseSlide
         });
         this.elem.dispatchEvent(qqSlideEvent); 
     }
-
-    getNextStep() {
-        return this.data.next_slide_id;
-    };
     
     isNextButtonEnabled() {
         if (this.getIfConfirmRequired()) {
@@ -66,13 +62,6 @@ class InfoSlide extends BaseSlide
         }
 
         return true;
-    }
-    
-    getNextButtonLabel() {
-        if (this.data.hasOwnProperty("next_button_label")) {
-            return QuickQuizCore.sanitizeHtml(this.data.next_button_label);
-        }
-        return null;
     }
 
     getReport() {

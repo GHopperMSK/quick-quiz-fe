@@ -10,22 +10,11 @@ class RateSlide extends BaseSlide
         this.minValue = RateSlide.DEFAULT_MIN_VALUE;
         this.maxValue = RateSlide.DEFAULT_MAX_VALUE;
     }
-
-    getNextStep() {
-        return this.data.next_slide_id;
-    }
     
     isNextButtonEnabled() {
         return this.value != null;
     }
-    
-    getNextButtonLabel() {
-        if ("next_button_label" in this.data) {
-            return QuickQuizCore.sanitizeHtml(this.data.next_button_label);
-        }
-        return null;
-    }
-    
+
     setValue(value) {
         this.value = value;
     
@@ -52,7 +41,7 @@ class RateSlide extends BaseSlide
     }
 
     compileTemplate() {
-        let html = `<p>${QuickQuizCore.sanitizeHtml(this.data.text)}</p>`;
+        let html = `<p>${BaseSlide.sanitizeHtml(this.data.text)}</p>`;
         html += "<div class=\"rate\">";
         if ("min_value" in this.data) {
             this.minValue = this.data.min_value;

@@ -131,7 +131,7 @@ class QuickQuizCore
             }
         }
 
-        if (timeout > 0) {
+        if (!currentSlide.isSkippable() && timeout > 0) {
             nextButtonLabel += " (" + timeout + ")";
         }
 
@@ -139,13 +139,13 @@ class QuickQuizCore
     }
 
     next() {
-        const currentStep = this.getCurrentSlide();
-        const nextId = currentStep.getNextStep();
+        const currentSlide = this.getCurrentSlide();
+        const nextId = currentSlide.getNextSlide();
         if (nextId == null) {
             this.submit();
         } else {
-            const nextStep = this.getSlide(nextId);
-            this.slidesHistory.push(nextStep.id);
+            const nextSlide = this.getSlide(nextId);
+            this.slidesHistory.push(nextSlide.id);
             this.render();
         }
     }
@@ -180,20 +180,6 @@ class QuickQuizCore
 
     isFirstSlide() {
         return this.slidesHistory.length == 1;
-    }
-
-    static sanitizeHtml(string) {
-        const map = {
-            '&': '&amp;',
-            '<': '&lt;',
-            '>': '&gt;',
-            '"': '&quot;',
-            "'": '&#x27;',
-            "`": '&#x27;',
-            "/": '&grave;',
-        };
-        const reg = /[&<>"'`/]/ig;
-        return string.replace(reg, (match)=>(map[match]));
     }
 }
 
