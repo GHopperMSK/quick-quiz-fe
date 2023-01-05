@@ -3,23 +3,45 @@ import './core.css';
 
 class QuickQuizCore
 {
-    constructor(quizId, websiteId, rootElement, reportCallback) {
+    constructor(quizId, websiteId, rootElement, lang, reportCallback, serverUrl) {
+        // TODO: validate input params
+
         this.quizId = quizId;
         this.websiteId = websiteId;
+        this.root = rootElement;
+        this.lang = (lang != null) ? lang : QuickQuizCore.DEFAULT_LANG;
+        this.reportCallback = (reportCallback != null) ? reportCallback : this.submitReport;
+        this.serverUrl = (serverUrl != null) ? serverUrl : QuickQuizCore.SERVER_URL;
+    
         this.version = null;
-    
-        this.reportCallback = reportCallback;
-    
         this.initSlide = null;
         this.slides = {};
         this.slidesHistory = [];
-    
-        this.root = rootElement;
         this.nextButton = null;
         this.prevButton = null;
         this.slidesBlock = null;
-    
         this.isInitialized = false;
+
+        const config = this.loadConfig(`${this.serverUrl}/get-config?lang=${this.lang}&quiz_id=${this.quizId}&website_id=${this.websiteId}`);
+        this.init(config);
+    }
+
+    loadConfig(url) {
+        const request = new XMLHttpRequest();
+        request.open('GET', url, false);
+        request.send(null);
+        if (request.status !== 200) {
+            throw Error("Bad server response");
+        }
+
+        let config;
+        try {
+            config = JSON.parse(request.responseText);
+        } catch (error) {
+            throw Error("Invalid config file");
+        }
+
+        return config;
     }
 
     init(jsonConfig) {
@@ -62,14 +84,13 @@ class QuickQuizCore
         this.render();
     }
 
-    parseConfig(cnf) {
+    parseConfig(config) {
         // TODO: validate Config
 
-        const rawConfig = JSON.parse(cnf);
-        this.version = rawConfig.version;
-        this.initSlide = rawConfig.init_slide;
+        this.version = config.version;
+        this.initSlide = config.init_slide;
 
-        rawConfig.slides.forEach(function(slideConfig) {
+        config.slides.forEach(function(slideConfig) {
             const slide = SlideFactory.createSlide(slideConfig);
             this.slides[slide.id] = slide;
         }, this);
@@ -142,7 +163,7 @@ class QuickQuizCore
         const currentSlide = this.getCurrentSlide();
         const nextId = currentSlide.getNextSlide();
         if (nextId == null) {
-            this.submit();
+            this.prepareReport();
         } else {
             const nextSlide = this.getSlide(nextId);
             this.slidesHistory.push(nextSlide.id);
@@ -150,11 +171,11 @@ class QuickQuizCore
         }
     }
 
-    submit() {
+    prepareReport() {
         let report = {
             "quiz_id": this.quizId,
             "website_id": this.websiteId,
-            "slides": []
+            "slides": {}
         };
         this.slidesHistory.forEach(function(slideId) {
             const slide = this.getSlide(slideId);
@@ -162,12 +183,23 @@ class QuickQuizCore
         }, this);
 
         this.reportCallback(report);
-        this.root.classList.add("qq-root-close");
 
+        this.root.classList.add("qq-root-close");
         setTimeout(function(that) {
-            window.quickQuiz.root.parentNode.removeChild(that.root);
+            that.root.parentNode.removeChild(that.root);
             window.quickQuiz = null;
         }, 1000, this);
+    }
+
+    submitReport(data) {
+        fetch(`${this.serverUrl}/submit-data`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
     }
 
     prev() {
@@ -206,6 +238,20 @@ Object.defineProperty(QuickQuizCore, "DEFAULT_SKIP_BUTTON_LABEL", {
 
 Object.defineProperty(QuickQuizCore, "EVENT_INIT_TYPE", {
     value: "qq-init",
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
+
+Object.defineProperty(QuickQuizCore, "SERVER_URL", {
+    value: "http://quick-quiz.com:3000",
+    writable: false,
+    configurable: false,
+    enumerable: false
+});
+
+Object.defineProperty(QuickQuizCore, "DEFAULT_LANG", {
+    value: "en",
     writable: false,
     configurable: false,
     enumerable: false

@@ -3,6 +3,78 @@
 ## Info
 A web service which provides a possibility to add questionnaires to any website. Highly customizable questions and design. Rich export opportunities and in house report generator.
 
+## How to use
+### 1. Build
+
+```
+$ npm run build
+$ ls dist/
+QuickQuiz.css	QuickQuiz.js
+```
+
+### 2. Add `QuickQuiz.css` and `QuickQuiz.js` into a target webpage
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module" src="./js/QuickQuiz.js"></script>
+        <link rel="stylesheet" href="./css/QuickQuiz.css">
+    </head>
+    <body>
+    </body>
+</html>
+```
+
+### 3. Emit `qq-init` custom event whenever you need the survey
+```
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module" src="./js/QuickQuiz.js"></script>
+        <link rel="stylesheet" href="./css/QuickQuiz.css">
+    </head>
+    <body>
+        <h1>Quick Quiz</h1>
+            <div id="quickquiz"></div>
+            <script>
+                setTimeout(function() {
+                    const quizRootElement = document.getElementById("quickquiz");
+                    const qqEventInit = new CustomEvent("qq-init", {
+                        "detail": {
+                            "quiz_id": 1,
+                            "website_id": 2,
+                            "root_element": quizRootElement,
+                            "lang": "en"
+                        }
+                    });
+                    window.dispatchEvent(qqEventInit);
+                }, 5000);
+            </script>
+    </body>
+</html>
+```
+
+In the example, the survey will be shown in 5 seconds after the page is fully loaded.
+
+## Configuration
+
+```
+const qqEventInit = new CustomEvent("qq-init", {
+    "detail": {
+        "quiz_id": 1, // mandatory
+        "website_id": 2, // mandatory
+        "root_element": quizRootElement,
+        "lang": "en", // optional
+        "server_url": "http://localhost:3000", // optional
+        "report_callback": reportCallback, // optional
+    }
+});
+```
+
+`root_element` defines html element in which the survay will be placed.
+
+`report_callback` - you can replace default callback by your own.
+
 ## Slides types
 A quiz consists of several slides, which of them provides information or asks a question. A user moves from one to another through chain of such slides until the very end. Eventually a report is generated and sends to a server.
 

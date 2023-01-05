@@ -21,9 +21,13 @@ test("Correct control initialization with agreement required", () => {
             }
         ]
     }`;
+    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
+    .mockImplementation(() => {
+        return JSON.parse(rawData);
+    });
+
     let rootElement = document.createElement("div");
-    const quickQuizCore = new QuickQuizCore(1, 2, rootElement, null);
-    quickQuizCore.init(rawData);
+    const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
     expect(quickQuizCore.prevButton.disabled).toStrictEqual(true);
     expect(quickQuizCore.prevButton.innerText).toBe("<<");
     expect(quickQuizCore.nextButton.disabled).toStrictEqual(true);
@@ -48,9 +52,13 @@ test("Correct control initialization with agreement for skippable slide", () => 
             }
         ]
     }`;
+    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
+    .mockImplementation(() => {
+        return JSON.parse(rawData);
+    });
+
     let rootElement = document.createElement("div");
-    const quickQuizCore = new QuickQuizCore(1, 2, rootElement, null);
-    quickQuizCore.init(rawData);
+    const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
     expect(quickQuizCore.prevButton.disabled).toStrictEqual(true);
     expect(quickQuizCore.prevButton.innerText).toBe("<<");
     expect(quickQuizCore.nextButton.disabled).toStrictEqual(false);
