@@ -8,7 +8,7 @@ class QuickQuizCore
 
         this.quizId = quizId;
         this.websiteId = websiteId;
-        this.root = rootElement;
+        this.root = (rootElement != null) ? rootElement : document.body;
         this.lang = (lang != null) ? lang : QuickQuizCore.DEFAULT_LANG;
         this.reportCallback = (reportCallback != null) ? reportCallback : this.submitReport;
         this.serverUrl = (serverUrl != null) ? serverUrl : QuickQuizCore.SERVER_URL;
@@ -21,6 +21,7 @@ class QuickQuizCore
         this.prevButton = null;
         this.slidesBlock = null;
         this.isInitialized = false;
+        this.qqWidgetElement = null;
 
         const config = this.loadConfig(`${this.serverUrl}/get-config?lang=${this.lang}&quiz_id=${this.quizId}&website_id=${this.websiteId}`);
         this.init(config);
@@ -52,11 +53,13 @@ class QuickQuizCore
         this.parseConfig(jsonConfig);
         this.setEventListeners();
 
-        this.root.classList.add("qq-root");
+        this.qqWidgetElement = document.createElement("div");
+
+        this.qqWidgetElement.classList.add("qq-root");
 
         this.slidesBlock = document.createElement("div");
         this.slidesBlock.id = "qq-slides";
-        this.root.appendChild(this.slidesBlock);
+        this.qqWidgetElement.appendChild(this.slidesBlock);
 
         const controlDiv = document.createElement("div");
         controlDiv.id = "qq-controls";
@@ -76,7 +79,8 @@ class QuickQuizCore
         };
         controlDiv.appendChild(this.nextButton);
 
-        this.root.appendChild(controlDiv);
+        this.qqWidgetElement.appendChild(controlDiv);
+        this.root.appendChild(this.qqWidgetElement);
 
         this.isInitialized = true;
 
@@ -184,9 +188,9 @@ class QuickQuizCore
 
         this.reportCallback(report);
 
-        this.root.classList.add("qq-root-close");
+        this.qqWidgetElement.classList.add("qq-root-close");
         setTimeout(function(that) {
-            that.root.parentNode.removeChild(that.root);
+            that.root.removeChild(that.qqWidgetElement);
             window.quickQuiz = null;
         }, 1000, this);
     }

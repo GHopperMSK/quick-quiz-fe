@@ -35,16 +35,12 @@ QuickQuiz.css	QuickQuiz.js
     </head>
     <body>
         <h1>Quick Quiz</h1>
-            <div id="quickquiz"></div>
             <script>
                 setTimeout(function() {
-                    const quizRootElement = document.getElementById("quickquiz");
                     const qqEventInit = new CustomEvent("qq-init", {
                         "detail": {
                             "quiz_id": 1,
-                            "website_id": 2,
-                            "root_element": quizRootElement,
-                            "lang": "en"
+                            "website_id": 2
                         }
                     });
                     window.dispatchEvent(qqEventInit);
@@ -63,7 +59,7 @@ const qqEventInit = new CustomEvent("qq-init", {
     "detail": {
         "quiz_id": 1, // mandatory
         "website_id": 2, // mandatory
-        "root_element": quizRootElement,
+        "root_element": quizRootElement, // optional
         "lang": "en", // optional
         "server_url": "http://localhost:3000", // optional
         "report_callback": reportCallback, // optional
@@ -71,7 +67,7 @@ const qqEventInit = new CustomEvent("qq-init", {
 });
 ```
 
-`root_element` defines html element in which the survay will be placed.
+`root_element` defines html element in which the survay html-code be mounted.
 
 `report_callback` - you can replace default callback by your own.
 
