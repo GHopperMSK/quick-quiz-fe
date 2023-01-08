@@ -55,6 +55,17 @@ class QuickQuizCore
 
         this.qqWidgetElement = document.createElement("div");
 
+        const closeDiv = document.createElement("div");
+        closeDiv.classList.add("qq-close");
+
+        const closeButton = document.createElement("span");
+        closeButton.onclick = function() {
+            window.quickQuiz.shutDown();
+            return false;
+        };
+        closeDiv.appendChild(closeButton);
+        this.qqWidgetElement.appendChild(closeDiv);
+
         this.qqWidgetElement.classList.add("qq-root");
 
         this.slidesBlock = document.createElement("div");
@@ -188,6 +199,10 @@ class QuickQuizCore
 
         this.reportCallback(report);
 
+        this.shutDown();
+    }
+
+    shutDown() {
         this.qqWidgetElement.classList.add("qq-root-close");
         setTimeout(function(that) {
             that.root.removeChild(that.qqWidgetElement);

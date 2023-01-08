@@ -7,7 +7,23 @@
     padding: 10px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
-    animation-name: fadeInBottom
+    animation-name: fadeInBottom;
+}
+
+.qq-close {
+    display: inline-block;
+    width: 100%;
+}
+
+.qq-close span:after {
+    content: "\00d7";
+    float: right;
+    text-align: right;
+}
+
+.qq-close span:hover {
+    font-weight: 900;
+    cursor: pointer;
 }
 
 @keyframes fadeInBottom {
