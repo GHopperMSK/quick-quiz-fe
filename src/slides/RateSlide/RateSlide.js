@@ -41,7 +41,7 @@ class RateSlide extends BaseSlide
     }
 
     compileTemplate() {
-        let html = `<p>${BaseSlide.sanitizeHtml(this.data.text)}</p>`;
+        let html = `<p>${this.processRawTextInput(this.data.text)}</p>`;
         html += "<div class=\"rate\">";
         if ("min_value" in this.data) {
             this.minValue = this.data.min_value;

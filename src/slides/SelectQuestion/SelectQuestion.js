@@ -26,7 +26,7 @@ class SelectQuestion extends BaseSlide
         }
 
         if (nextButtonLabel != null) {
-            return BaseSlide.sanitizeHtml(nextButtonLabel);
+            return this.sanitizeHtml(nextButtonLabel);
         }
 
         if ("default_next_button_label" in this.data) {
@@ -34,7 +34,7 @@ class SelectQuestion extends BaseSlide
         }
     
         if (nextButtonLabel != null) {
-            return BaseSlide.sanitizeHtml(nextButtonLabel);
+            return this.sanitizeHtml(nextButtonLabel);
         }
 
         return null;
@@ -66,7 +66,7 @@ class SelectQuestion extends BaseSlide
 
     compileTemplate() {
         let html = "";
-        html += `<p>${BaseSlide.sanitizeHtml(this.data.question)}</p>`;
+        html += `<p>${this.processRawTextInput(this.data.question)}</p>`;
         for (const optionId in this.data.options) {
             html += `<input
                 type="radio"
@@ -76,7 +76,7 @@ class SelectQuestion extends BaseSlide
                 ${(this.optionId == optionId) ? "checked" : ""} />
             `;
             html += `<label for='qq_slt_slide_option_${optionId}'>
-                ${BaseSlide.sanitizeHtml(this.data.options[optionId].label)}
+                ${this.processRawTextInput(this.data.options[optionId].label)}
                 </label><br />`;
         }
         return html;

@@ -10,7 +10,7 @@ class InfoSlide extends BaseSlide
     }
 
     compileTemplate() {
-        let html = `<p class="text-block">${BaseSlide.sanitizeHtml(this.data.text)}</p>`;
+        let html = `<p class="text-block">${this.processRawTextInput(this.data.text)}</p>`;
         if (this.getIfConfirmRequired()) {
             html += `<input type="checkbox"
                 id="qq_inf_slide_confirm_checkbox"

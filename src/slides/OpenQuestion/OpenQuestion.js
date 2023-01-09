@@ -39,7 +39,7 @@ class OpenQuestion extends BaseSlide
     }
     
     compileTemplate() {
-        let html = `<p>${BaseSlide.sanitizeHtml(this.data.question)}</p>`;
+        let html = `<p>${this.processRawTextInput(this.data.question)}</p>`;
 
         switch (this.data.text_form_type) {
             case OpenQuestion.OPQ_TYPE_INPUT:

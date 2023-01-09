@@ -15,7 +15,7 @@ class BaseSlide
 
     getNextButtonLabel() {
         if (this.data.hasOwnProperty("next_button_label")) {
-            return BaseSlide.sanitizeHtml(this.data.next_button_label);
+            return this.sanitizeHtml(this.data.next_button_label);
         }
         return null;
     }
@@ -74,7 +74,7 @@ class BaseSlide
         return this.skippable;
     };
 
-    static sanitizeHtml(string) {
+    sanitizeHtml(string) {
         const map = {
             '&': '&amp;',
             '<': '&lt;',
@@ -86,6 +86,17 @@ class BaseSlide
         };
         const reg = /[&<>"'`/]/ig;
         return string.replace(reg, (match)=>(map[match]));
+    }
+
+    parseMarkdown(markdown) {
+        const htmlText = markdown
+            .replace(/(\*{2})([^*]+)(\*{2})/gim, '<b>$2</b>')
+            .replace(/(\_{2})([^*]+)(\_{2})/gim, '<i>$2</i>');
+        return htmlText;
+    }
+
+    processRawTextInput(text) {
+        return this.parseMarkdown(this.sanitizeHtml(text));
     }
 }
 
