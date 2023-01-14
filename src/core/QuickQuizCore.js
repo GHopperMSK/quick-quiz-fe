@@ -23,26 +23,14 @@ class QuickQuizCore
         this.isInitialized = false;
         this.qqWidgetElement = null;
 
-        const config = this.loadConfig(`${this.serverUrl}/get-config?lang=${this.lang}&quiz_id=${this.quizId}&website_id=${this.websiteId}`);
-        this.init(config);
-    }
-
-    loadConfig(url) {
-        const request = new XMLHttpRequest();
-        request.open('GET', url, false);
-        request.send(null);
-        if (request.status !== 200) {
-            throw Error("Bad server response");
-        }
-
-        let config;
-        try {
-            config = JSON.parse(request.responseText);
-        } catch (error) {
-            throw Error("Invalid config file");
-        }
-
-        return config;
+        fetch(`${this.serverUrl}/config?lang=${this.lang}&quiz_id=${this.quizId}&website_id=${this.websiteId}`)
+            .then((response) => response.json())
+            .then((config) => {
+                this.init(config);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     init(jsonConfig) {

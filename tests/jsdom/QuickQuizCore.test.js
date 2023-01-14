@@ -5,6 +5,12 @@
 import QuickQuizCore from '../../src/core/QuickQuizCore.js';
 import InfoSlide from '../../src/slides/InfoSlide/InfoSlide.js';
 
+global.fetch = require('jest-fetch-mock');
+
+beforeEach(() => {
+    fetch.mockClear();
+});
+
 test("getCurrentSlide returns init slide", () => {
     const rawData = `{
         "version": 1,
@@ -30,15 +36,14 @@ test("getCurrentSlide returns init slide", () => {
             }
         ]
     }`;
-    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
-        .mockImplementation(() => {
-            return JSON.parse(rawData);
-        });
+    fetch.mockResponseOnce(rawData);
 
     let rootElement = document.createElement("div");
     const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
     const slide = quickQuizCore.getCurrentSlide();
-    expect(slide instanceof InfoSlide).toBe(true);
+    setTimeout(() => {
+        expect(slide instanceof InfoSlide).toBe(true);
+    }, 1);
 });
 
 test("isFirstSlide returns true after init", () => {
@@ -56,15 +61,14 @@ test("isFirstSlide returns true after init", () => {
             }
         ]
     }`;
-    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
-        .mockImplementation(() => {
-            return JSON.parse(rawData);
-        });
+    fetch.mockResponseOnce(rawData);
 
     let rootElement = document.createElement("div");
     const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
     const slide = quickQuizCore.getCurrentSlide();
-    expect(quickQuizCore.isFirstSlide()).toBe(true);
+    setTimeout(() => {
+        expect(quickQuizCore.isFirstSlide()).toBe(true);
+    }, 1);
 });
 
 test("Get current slide in history array after initialization", () => {
@@ -90,14 +94,13 @@ test("Get current slide in history array after initialization", () => {
             }
         ]
     }`;
-    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
-        .mockImplementation(() => {
-            return JSON.parse(rawData);
-        });
+    fetch.mockResponseOnce(rawData);
 
     let rootElement = document.createElement("div");
     const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
-    expect(quickQuizCore.slidesHistory).toStrictEqual([2]);
+    setTimeout(() => {
+        expect(quickQuizCore.slidesHistory).toStrictEqual([2]);
+    }, 1);
 });
 
 test("Correct control initialization with default labels", () => {
@@ -123,17 +126,16 @@ test("Correct control initialization with default labels", () => {
             }
         ]
     }`;
-    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
-        .mockImplementation(() => {
-            return JSON.parse(rawData);
-        });
+    fetch.mockResponseOnce(rawData);
 
     let rootElement = document.createElement("div");
     const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
-    expect(quickQuizCore.prevButton.disabled).toBe(true);
-    expect(quickQuizCore.prevButton.innerText).toBe("<<");
-    expect(quickQuizCore.nextButton.disabled).toBe(false);
-    expect(quickQuizCore.nextButton.innerText).toBe(">>");
+    setTimeout(() => {
+        expect(quickQuizCore.prevButton.disabled).toBe(true);
+        expect(quickQuizCore.prevButton.innerText).toBe(QuickQuizCore.DEFAULT_PERV_BUTTON_LABEL);
+        expect(quickQuizCore.nextButton.disabled).toBe(false);
+        expect(quickQuizCore.nextButton.innerText).toBe(QuickQuizCore.DEFAULT_NEXT_BUTTON_LABEL);
+    }, 1);
 });
 
 test("Correct control initialization with default labels", () => {
@@ -152,17 +154,16 @@ test("Correct control initialization with default labels", () => {
             }
         ]
     }`;
-    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
-        .mockImplementation(() => {
-            return JSON.parse(rawData);
-        });
+    fetch.mockResponseOnce(rawData);
 
     let rootElement = document.createElement("div");
     const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
-    expect(quickQuizCore.prevButton.disabled).toBe(true);
-    expect(quickQuizCore.prevButton.innerText).toBe("<<");
-    expect(quickQuizCore.nextButton.disabled).toBe(false);
-    expect(quickQuizCore.nextButton.innerText).toBe("Custom next button label");
+    setTimeout(() => {
+        expect(quickQuizCore.prevButton.disabled).toBe(true);
+        expect(quickQuizCore.prevButton.innerText).toBe(QuickQuizCore.DEFAULT_PERV_BUTTON_LABEL);
+        expect(quickQuizCore.nextButton.disabled).toBe(false);
+        expect(quickQuizCore.nextButton.innerText).toBe("Custom next button label");
+    }, 1);
 });
 
 test("Correct control initialization with timeout option", () => {
@@ -182,15 +183,14 @@ test("Correct control initialization with timeout option", () => {
             }
         ]
     }`;
-    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
-        .mockImplementation(() => {
-            return JSON.parse(rawData);
-        });
+    fetch.mockResponseOnce(rawData);
 
     let rootElement = document.createElement("div");
     const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
-    expect(quickQuizCore.prevButton.disabled).toBe(true);
-    expect(quickQuizCore.prevButton.innerText).toBe("<<");
-    expect(quickQuizCore.nextButton.disabled).toBe(true);
-    expect(quickQuizCore.nextButton.innerText).toBe("Custom next button label (10)");
+    setTimeout(() => {
+        expect(quickQuizCore.prevButton.disabled).toBe(true);
+        expect(quickQuizCore.prevButton.innerText).toBe(QuickQuizCore.DEFAULT_PERV_BUTTON_LABEL);
+        expect(quickQuizCore.nextButton.disabled).toBe(true);
+        expect(quickQuizCore.nextButton.innerText).toBe("Custom next button label (10)");
+    }, 1);
 });

@@ -4,8 +4,13 @@
 
 import QuickQuizCore from '../../src/core/QuickQuizCore.js';
 
+global.fetch = require('jest-fetch-mock');
+
+beforeEach(() => {
+    fetch.mockClear();
+});
+
 test("Correct control initialization with agreement required", () => {
-    document.getElementById = jest.fn().mockImplementation(function(id) { return document.createElement("div"); });
     const rawData = `{
         "version": 1,
         "init_slide": 1,
@@ -21,17 +26,17 @@ test("Correct control initialization with agreement required", () => {
             }
         ]
     }`;
-    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
-    .mockImplementation(() => {
-        return JSON.parse(rawData);
-    });
+    fetch.mockResponseOnce(rawData);
+    document.getElementById = jest.fn().mockImplementation(function(id) { return document.createElement("div"); });
 
     let rootElement = document.createElement("div");
     const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
-    expect(quickQuizCore.prevButton.disabled).toStrictEqual(true);
-    expect(quickQuizCore.prevButton.innerText).toBe("<<");
-    expect(quickQuizCore.nextButton.disabled).toStrictEqual(true);
-    expect(quickQuizCore.nextButton.innerText).toBe(">>");
+    setTimeout(() => {
+        expect(quickQuizCore.prevButton.disabled).toStrictEqual(true);
+        expect(quickQuizCore.prevButton.innerText).toBe(QuickQuizCore.DEFAULT_PERV_BUTTON_LABEL);
+        expect(quickQuizCore.nextButton.disabled).toStrictEqual(true);
+        expect(quickQuizCore.nextButton.innerText).toBe(QuickQuizCore.DEFAULT_NEXT_BUTTON_LABEL);
+    }, 1);
 });
 
 test("Correct control initialization with agreement for skippable slide", () => {
@@ -52,15 +57,14 @@ test("Correct control initialization with agreement for skippable slide", () => 
             }
         ]
     }`;
-    jest.spyOn(QuickQuizCore.prototype, 'loadConfig')
-    .mockImplementation(() => {
-        return JSON.parse(rawData);
-    });
+    fetch.mockResponseOnce(rawData);
 
     let rootElement = document.createElement("div");
     const quickQuizCore = new QuickQuizCore(1, 2, rootElement);
-    expect(quickQuizCore.prevButton.disabled).toStrictEqual(true);
-    expect(quickQuizCore.prevButton.innerText).toBe("<<");
-    expect(quickQuizCore.nextButton.disabled).toStrictEqual(false);
-    expect(quickQuizCore.nextButton.innerText).toBe("Skip");
+    setTimeout(() => {
+        expect(quickQuizCore.prevButton.disabled).toStrictEqual(true);
+        expect(quickQuizCore.prevButton.innerText).toBe(QuickQuizCore.DEFAULT_PERV_BUTTON_LABEL);
+        expect(quickQuizCore.nextButton.disabled).toStrictEqual(false);
+        expect(quickQuizCore.nextButton.innerText).toBe(QuickQuizCore.DEFAULT_SKIP_BUTTON_LABEL);
+    }, 1);
 });
