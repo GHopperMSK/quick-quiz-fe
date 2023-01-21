@@ -57,8 +57,7 @@ In the example, the survey will be shown in 5 seconds after the page is fully lo
 ```
 const qqEventInit = new CustomEvent("qq-init", {
     "detail": {
-        "quiz_id": 1, // mandatory
-        "website_id": 2, // mandatory
+        "quiz_uuid": "c2cd6a3f-9777-41b1-be4b-0a6d897f4512", // mandatory
         "root_element": quizRootElement, // optional
         "lang": "en", // optional
         "server_url": "http://localhost:3000", // optional

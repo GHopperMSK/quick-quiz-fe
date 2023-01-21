@@ -3,8 +3,7 @@ import QuickQuizCore from './core/QuickQuizCore.js';
 window.addEventListener(QuickQuizCore.EVENT_INIT_TYPE, (event) => {
     try {
         window.quickQuiz = new QuickQuizCore(
-            event.detail.quiz_id,
-            event.detail.website_id,
+            event.detail.quiz_uuid,
             event.detail.root_element,
             event.detail.lang,
             event.detail.report_callback,

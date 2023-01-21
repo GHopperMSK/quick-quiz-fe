@@ -3,11 +3,10 @@ import './core.css';
 
 class QuickQuizCore
 {
-    constructor(quizId, websiteId, rootElement, lang, reportCallback, serverUrl) {
+    constructor(quizUuid, rootElement, lang, reportCallback, serverUrl) {
         // TODO: validate input params
 
-        this.quizId = quizId;
-        this.websiteId = websiteId;
+        this.quizUuid = quizUuid;
         this.root = (rootElement != null) ? rootElement : document.body;
         this.lang = (lang != null) ? lang : QuickQuizCore.DEFAULT_LANG;
         this.reportCallback = (reportCallback != null) ? reportCallback : this.submitReport;
@@ -23,7 +22,7 @@ class QuickQuizCore
         this.isInitialized = false;
         this.qqWidgetElement = null;
 
-        fetch(`${this.serverUrl}/config?lang=${this.lang}&quiz_id=${this.quizId}&website_id=${this.websiteId}`)
+        fetch(`${this.serverUrl}/config?lang=${this.lang}&quiz_uuid=${this.quizUuid}`)
             .then((response) => response.json())
             .then((config) => {
                 this.init(config);
@@ -176,8 +175,8 @@ class QuickQuizCore
 
     prepareReport() {
         let report = {
-            "quiz_id": this.quizId,
-            "website_id": this.websiteId,
+            "quiz_uuid": this.quizUuid,
+            "lang": this.lang,
             "slides": {}
         };
         this.slidesHistory.forEach(function(slideId) {
@@ -199,13 +198,16 @@ class QuickQuizCore
     }
 
     submitReport(data) {
-        fetch(`${this.serverUrl}/submit-data`, {
+        fetch(`${this.serverUrl}/answer`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
+        })
+        .catch((err) => {
+            console.log(err);
         });
     }
 

@@ -20,7 +20,7 @@ class SlideFactory
             case BaseSlide.RATE_SLIDE:
                 return new RateSlide(slideData.id, slideData.config);
             default:
-                throw "Unknown question type!";
+                throw `Unknown question type '${slideData.type}'!`;
         }
     };
 }
