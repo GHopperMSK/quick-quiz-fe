@@ -7,6 +7,11 @@ class QuickQuizCore
         // TODO: validate input params
 
         this.quizUuid = quizUuid;
+        if (this.checkCookie(this.quizUuid)) {
+            // the quiz has already been submitted
+            return;
+        }
+
         this.root = (rootElement != null) ? rootElement : document.body;
         this.lang = (lang != null) ? lang : QuickQuizCore.DEFAULT_LANG;
         this.reportCallback = (reportCallback != null) ? reportCallback : this.submitReport;
@@ -22,7 +27,7 @@ class QuickQuizCore
         this.isInitialized = false;
         this.qqWidgetElement = null;
 
-        fetch(`${this.serverUrl}/config?lang=${this.lang}&quiz_uuid=${this.quizUuid}`)
+        fetch(`${this.serverUrl}/api/config?lang=${this.lang}&quiz_uuid=${this.quizUuid}`)
             .then((response) => response.json())
             .then((config) => {
                 this.init(config);
@@ -184,9 +189,35 @@ class QuickQuizCore
             report.slides[slideId] = slide.getReport();
         }, this);
 
-        this.reportCallback(report);
+        try {
+            this.reportCallback(report);
+            this.setCookie(this.quizUuid, 30);
+        } catch (e) {
+            throw e;
+        }
 
         this.shutDown();
+    }
+
+    setCookie(uuid, exDays) {
+        console.log('setCookie');
+        const cookieName = `quick-quiz-completed-${uuid}`;
+
+        const d = new Date();
+        d.setTime(d.getTime() + (exDays * 24 * 60 * 60 * 1000));
+        const expires = "expires="+ d.toUTCString();
+
+        document.cookie = `${cookieName}=true; ${expires}; SameSite=None; Secure`;
+    }
+
+    checkCookie(uuid) {
+        const cookieName = `quick-quiz-completed-${uuid}`;
+
+        if (document.cookie.split('; ').find((row) => row.startsWith(cookieName))) {
+            return true;
+        }
+
+        return false;
     }
 
     shutDown() {
@@ -198,7 +229,7 @@ class QuickQuizCore
     }
 
     submitReport(data) {
-        fetch(`${this.serverUrl}/answer`, {
+        fetch(`${this.serverUrl}/api/answer`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -207,7 +238,7 @@ class QuickQuizCore
             body: JSON.stringify(data)
         })
         .catch((err) => {
-            console.log(err);
+            throw err;
         });
     }
 
